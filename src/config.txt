@@ -1,0 +1,44 @@
+Configuration file for fuzzy ARTMAP adaptation using dpso
+by Jean-Francois Connolly
+(Each value is at column 51 without ANY tabulation)  
+
+/*-- General info
+Data base used {cnrc, mobo}:                     mobof32
+Type of learn. scenario {add,upd}:               add
+Are we doing incremental learning:               1
+Number of blocks:                                24
+
+Starting replication:                            1
+Number of replications:                          1
+Number of estimation replications:               5
+
+Path to db:                                      ../../database
+Path to saved stuff:                             ../../savedStuff
+
+/*-- optimization method (pso)
+Number of dimensions:                            4 
+Number of objectives:                            2 
+Maximal number of iterations:                    100
+Maximal number of stalling it.:                  10
+
+apha (inertia weight):                           0.73
+beta (inertia weight):                           2.9
+
+Size of the swarm:                               60
+Neighborhood size (DNPSO):                       5
+Max. number of subswarms:                        60
+Max. size of the subswarms:                      4
+Min. dist. between subswarms (rCloud):           0.1
+Min. velocities of free p. (DNPSO):              0.01
+
+Minimum (position):                                0   0   -1    0
+Maximum (position):                              100   1    1    1
+
+/*-- Ensemble & ARTMAP
+Maximal number of F2 node:                       15000
+Maximal nb. of training epochs:                  2
+
+/*-- Archive
+Size of the grid (MOPSO):                        0
+Size of each memetic regions:                    8 
+Width (domain) of each memetic:                  1000

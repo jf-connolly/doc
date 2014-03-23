@@ -1,0 +1,110 @@
+function  g = util_graphCmcTime(data, nFrames)
+
+%-- Graphic's parameters
+sizeLine   = 1;      sizeLineCI = 0.5;
+sizeMrkr   = 3;      sizeMrkrCI = 1;
+sizeFont   = 8;      sizeFontL  = 10;
+typeMrkr   = 'o^svh+d<p*>x';
+
+%---------------------------------- Graphic -----------------------------------%
+nRank  = size(data,2);
+nShown = 3;
+
+sp(1) = subplot(121);
+
+%----------------------------------- Curves -----------------------------------%
+for tTest = 1:nShown
+    addr     = (2*tTest)-1;
+    dataTemp = data(addr:addr+1,:);
+    
+    %-- Colors & Markers
+    TONTE       = 0.7 * (tTest-1)/(nShown-1);
+    graphColor  = [TONTE, TONTE, TONTE];
+    graphType   = [typeMrkr(tTest), '-'];
+
+    hold on
+    %-- Curve (only)                
+    g(tTest) = plot(1:nRank, dataTemp(1, :), ...
+         '-', 'Color', graphColor, 'LineWidth', sizeLine);
+
+    %-- Custumized error bar
+    for r = 1:nRank
+        negBound = data(2*s-1, r) - data(, r);
+        posBound = data(2*s-1, r) + data(2*s, r);
+
+        plot(r, data(2*s-1, r), graphType, ...
+             'Color', graphColor, 'MarkerFaceColor', graphColor, ...
+             'MarkerSize', sizeMrkr);
+
+        plot([r,r], [negBound, posBound], graphType, ...
+             'LineWidth', sizeLineCI, 'Color', graphColor,...
+             'MarkerFaceColor', graphColor, 'MarkerSize', sizeMrkrCI);
+    end    
+    
+    maxY = max([maxY dataTemp(1,:)+dataTemp(2,:)]);
+    minY = min([minY dataTemp(1,:)-dataTemp(2,:)]);
+    
+end
+
+hold off     
+
+set(gca,'YLim', [minY-1 maxY+1], 'XLim', [1 nRank], ...
+        'FontName', 'Times New Roman', 'FontSize', sizeFont);
+
+%-- Labels definition
+xlabel('Ranking', ...
+       'FontName', 'Times New Roman', 'FontWeight', 'Bold', ...
+       'FontSize', sizeFont, 'Interpreter','Latex');
+ylabel('Cumulative Match (\%)', 'FontName', 'Times New Roman',...
+       'FontWeight', 'Bold', 'FontSize', sizeFont, 'Interpreter','Latex');
+
+%------------------------------- Legend - Swarm -------------------------------%
+s(2) = subplot(122);
+
+%-- Legend only for the classification rate
+textLegend = [' APSO'; 'DNPSO'; 'MOPSO'];
+
+% leg = legend(g, textLegend);
+% set(leg, 'FontSize', sizeFont, 'FontName', 'Times New Roman', ...
+%          'Orientation', 'vertical', 'Interpreter','Latex', ...
+%          'Location', 'SouthEast' );
+
+%-- Figure
+hold on
+    for t = 1:nShown
+        l = 0.3;
+        %-- Colors & Markers
+        TONTE       = 0.7 * (t-1)/(nShown-1);
+        graphColor  = [TONTE, TONTE, TONTE];
+        graphType   = '-';
+        graphType   = [typeMrkr(t)];
+
+        %-- Line
+        plot([0,l], [t,t], '-', 'Color', graphColor, 'LineWidth', sizeLine);
+        %-- Marker
+        plot(l/2, t, graphType, 'Color', graphColor, ...
+            'LineWidth', sizeLine, 'MarkerSize', sizeMrkr, ...
+            'MarkerFaceColor', graphColor);
+        %-- Text
+%         txt = sprintf('$%d$', shown(t));
+        text( l + 0.92, t, textLegend(t,:), ...
+              'FontName','Times New Roman', 'FontSize', sizeFont, ...
+              'HorizontalAlignment', 'right', 'Interpreter', 'Latex');
+    end
+    
+%     t = text( 0.1, nShown+1, '$D_t$', ...
+%       'FontName','Times New Roman', 'FontSize', sizeFont, ...
+%       'HorizontalAlignment', 'center', 'Interpreter', 'latex');
+
+hold off
+grid off
+box on
+
+set(gca, 'XTick', [], 'XTickLabel', [], 'YTick', [], 'YTickLabel', []);
+
+h    = 0.6/10*nBlocks;
+yPos = (1-h)/2;
+
+set(s(1), 'Position', [0.105 0.17 0.90 0.83]);
+set(s(2), 'Position', [0.81 0.77 0.2 0.25], ...
+    'XLim', [-0.1, l+1], 'YLim', [0.5, nShown+0.5]);

@@ -1,0 +1,47 @@
+function [mobo] = util_readInfoMobo()
+
+nameFile = sprintf('../database/mobof32/infoMobo.txt');
+
+
+f = fopen(nameFile,'r');
+
+    tmp = fgetl(f);  tmp = fgetl(f);  tmp = fgetl(f);
+    tmp = fgetl(f);  tmp = fgetl(f);
+
+    tmp = fread(f,49);   nClasses = fscanf(f, '%d', 1);
+    tmp = fread(f,49);   nWalks   = fscanf(f, '%d', 1);
+    tmp = fread(f,49);   nViews   = fscanf(f, '%d', 1);
+
+    mobo = struct( ...
+                'nViews',   nViews, ...
+                'nWalks',   nWalks, ...
+                'nClasses', nClasses, ...
+                'nSequences', 0, ...
+                'sizeCls',  zeros(1, nClasses), ...
+                'info',     zeros(nViews*nWalks*nClasses,1), ...
+                'addr',     zeros(nViews*nWalks*nClasses + 1,1) ...
+             );
+    
+    tmp = fgetl(f);
+    tmp = fgetl(f);
+    tmp = fgetl(f);
+    tmp = fgetl(f);
+    
+    counter = 0;
+    for j = 1:nWalks
+        for i = 1:nViews
+            for k = 1:nClasses
+                counter            = counter + 1;
+                mobo.info(counter) = fscanf(f, '%d', 1);
+            end
+        end
+        tmp = fgetl(f);
+    end
+
+    floor(mobo.info/2);
+    
+    mobo.nSequences = counter;
+    
+    %-- Addresses of each sequences of the TEST data base!!!!!!!!!!
+    mobo.addr = [0 ; cumsum(floor(mobo.info/2))];
+fclose(f);
