@@ -1,0 +1,82 @@
+%----------------------------------- Context ----------------------------------%
+A critical function in biometric systems is the classification of query samples captured with some sensors against models designed during an enrollment process with reference samples.
+To improve robustness and reduce resources, statistical or neural pattern classifiers are often employ to build class models of these systems.
+Still, since real individuals are involved in the data acquisition process, collection and analysis of reference data is often expensive and time consuming.
+Therefore, classifiers are often designed using only some prior knowledge of the underlying data distributions, a set of user-defined hyperparameters, and a limited amount of reference data.
+
+%-- Why adaptation 
+In real biometric applications, such as video-based face recognition, it is however possible to acquire new reference samples at some point in time after a classifier has originally been trained and deployed for operations.
+Due to limited control over operational conditions when acquiring images from \emph{unconstrained} scenes, facial images are then subject to considerable variations and, in time, the physiology of individuals may change in either temporary or permanent fashion.
+New information, such as input features and new individuals, may also suddenly emerge and previously acquired data may eventually become obsolete in dynamically changing classification environments.
+
+The main objective of this thesis is to provide a video-based recognition system with a mean to perform an incremental enrollment and update of biometric models when new data becomes available.
+To achieve this, the relationship between the classification environment, where the FAM decision boundaries are defined, and the optimization environment, comprise of the search and objective spaces, is studied.
+The result is an AMCS that evolves a swarm of FAM neural networks in response to new data through a DPSO-based supervised incremental learning strategy.
+As each particle in a hyperparameter search space corresponds to a FAM network, the learning strategy co-optimizes all classifier parameters -- hyperparameters, weights, and architecture -- in order to maximize accuracy, while minimizing computational cost and memory resources.
+
+Although it does not directly take in account difficulties related to face recognition, such as different illumination conditions or background, this thesis proposes a flexible approach to tackles such issues in two ways.
+The resulting AMCS, unlike existing adaptive ensemble methods, both adapts a base classifier's plasticity and dynamically reselect ensembles from a pool to suit new data structure and learn new classes that would emerge during enrollment.
+
+When applied to a video face recognition application, the final version of the AMCS can provide predictions in real-time and with an accuracy higher or comparable with that of other systems in the literature.
+However, using the ADNPSO learning strategy requires training several classifiers many times over the same data.
+Design and update of the biometric models with an AMCS is thus to demanding to be performed in real time with standard computers.
+It must therefore be done offline.
+
+%-- Chapter 1
+In Chapter 1, the first version of this incremental learning strategy is applied to an ACS to maximize the accuracy of a single FAM classifier.
+This learning strategy reconsiders the four properties of a classification system capable of supervised incremental learning (as defined by \cite{polikar01}) in two ways.
+It now includes adapting a classifier's learning dynamics to maintain a high level of performance and storing previously acquired learning data for unbiased validation and fitness estimation.
+To assert the new incremental learning definition, the necessity of a LTM to store validation data is first shown empirically for both enrollment and update scenarios.
+Incremental learning is then shown to constitute a type III dynamic optimization problem where the optimal hyperparameter values, and their corresponding fitness, change in time.
+While this chapter illustrates the dynamic nature of the problem when all four FAM hyperparameters are optimized, Appendix I illustrates a dynamic objective function with a two dimensional example when only the $\beta$ and $\epsilon$ hyperparameters are optimized with a simple grid.
+
+%-- Chapter 2
+In Chapter 2, an incremental learning strategy, still based on DPSO, is proposed to evolve heterogeneous ensembles of classifiers (instead of only one) in response to new reference samples.
+It applied to an AMCS that consists of the swarm (or pool) of FAM neural networks, and a niching version of DPSO that optimizes all FAM parameters such that the classification rate is maximized.
+Given that diversity within a dynamic particle swarm is correlated with diversity within a corresponding pool of base classifiers, DPSO properties are exploited to generate and evolve diversified pools of FAM classifiers, and to efficiently select ensembles on the basis of accuracy and genotype diversity.
+For video sequences, the proposed solution yields a level of accuracy that is comparable to AMCSs that use reference ensemble-based and batch learning techniques, while requiring a significantly lower computational complexity than assessing diversity among classifiers in the feature or decision spaces.
+
+%-- Chapter 3
+Finally, Chapter 3 presents the latest version of the incremental learning strategy that now co-optimizes all parameters of the swarm of FAM classifiers such that both error rate and computational cost are minimized. 
+Optimization is now perform according the two objectives an ADNPSO algorithm that tackles MOO by defining fitness values directly with the objective functions (accuracy and network size) in the search space to generate classifiers suitable for ensembles.
+The AMCS previously presented in Chapter 2 is modified with an archive that stores FAM classifiers on the notion of local Pareto-optimality.
+Accurate ensembles with low computational cost are then designed by selecting classifiers on the basis of accuracy, and both genotype and phenotype diversity.
+Simulation results indicate that, unlike with classic mono- and multi-objective optimization, the pool of classifiers stored in the archive does not tend to focus on a specific region in the objective space.
+Moreover, while the proposed method provides accuracy comparable to that of using mono-objective optimization, it requires a fraction of the computational cost.
+
+
+%--------------------------------- Future work --------------------------------%
+\noindent\textbf{Future work}
+
+The latest version of the AMCS is designed to observe small amounts of learning data under several perspectives with a swarm of classifiers to create ensembles suitable for real video-based face recognition.
+Since it is capable of fast and stable supervised incremental learning, the FAM neural network classifier is used with the different versions of the PSO-based learning strategy.
+However, when applied to a given pattern recognition problem and under certain conditions, FAM are known to suffer from overtraining, or overfitting, which is directly connected to a category ($F_2$ layer node) proliferation problem (\cite{connolly08, henniges05, koufakou01}).
+For instance, if data acquisition procedure conditions result in large quantity of learning data, the continual growth of the FAM networks in the swarm can results in ensembles with high computational cost. 
+In particular, if there are interclass variations between the different classes (\emph{i.e.} overlap between underlying class distributions).
+Although it can be performed off-line, while predictions can afterward be performed on-line, the learning process can thus become tedious.
+To help further reduce FAM network structural complexity, while maintaining accuracy, future research subjects can be categorize according both classification and optimization environments.
+
+To disambiguate concepts in the classification environment, future works should consider focusing on preprocessing the newly available reference samples prior launching the incremental learning strategy.
+For instance, since the AMCS is applied to a face recognition problem, characterizing learning samples with different face images quality (lighting, pose, resolution, etc.) and statistical measures could be used in several ways.
+It would indicate which one is suitable for the design or update of a biometric class model (\cite{koh02}).
+Since FAM can perform on-line learning, the learning process could also be further controlled by indicating an optimal training pattern presentation order.
+Finally, combined with criteria defined in the optimization environment, these measures could also be used to redefine the utility of the LTM.
+Rather than only being used for validation purposes, it could store a representative subset of the learning samples dedicated to the reinitialization and retraining of networks that are no longer valid.
+The latter would be determined by monitoring phenotype values to detect solutions among the swarm that, because of their previous experience: can no longer bring new knowledge, can no longer be accurate, or involve a to high computational cost.
+
+Another issue that currently attracts a lot attention in the pattern recognition community is concept drift.
+Before considering it for future versions of the AMCS, it should first be verified that this phenomenon occurs during video-based face recognition.
+When an individual's face can change permanently in time, it does not necessarily means that someone else will eventually resemble what he, or she, used to look like.
+In other words, when new data becomes available, underlying class distributions will not necessarily move in the feature space as much as only grow.
+The incremental learning problem would then be characterized by concept drift, but ratter by incomplete knowledge of the underlying class distributions.
+If concept drift is indeed present during video-based face recognition, AMCS based of the FAM classifier could be adapted with pruning techniques to remove knowledge that is no longer valid.
+
+In the optimization environment, future work should focus on finding indicators that give the most insight on the properties needed by an optimization algorithm to evolve ensembles of classifiers.  
+While this study considers only the overall diversity of either swarm and selected ensembles, future work should rather focus on computing local diversity around each optima in the search space.
+This way, the capability of an optimization algorithm to spread solutions around each local optima and its impact on ensemble accuracy could be evaluated.
+In this context, a comparison of different genotype diversity indicators (\cite{corriveau12, orlunda08}) should also be considered to find which one is the most correlated with classifier diversity.
+
+Finally, to further reduced the computational burden during the learning process, change detection measures for both environments could be used.
+Combined with different criteria, also for both environments, they would indicate is either learning or optimization is necessary.
+The AMCS could thus react accordingly.
+That is, learn newly available data that contains only new knowledge and adjust the current hyperparameter values of the different FAM classifiers in the swarm to avoid a decrease in performance.

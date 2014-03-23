@@ -1,0 +1,170 @@
+\chapter{Analysis of the Learn++ algorithm for video-based face recognition}
+\label{sec:c0_learn++}
+
+The Learn++ algorithms is an AdaBoost-like ensemble of classifiers that is incrementally trained (with no access to previous data) on incoming batches of data .
+Originally able to perform only on stationary distributions from which data are incrementally acquired in batches later version were created learn new classes (Learn++.NC, \cite{muhlbaier09}), missing features (Learn++.MF, \cite{polikar10}), and learn from non-stationary environments (Learn++.NSE, \cite{polikar11}) where data distributions change in time.
+In all Learn++ algorithms, base classifiers are trained on new data according to some distribution rule and combined with some form of weighted majority voting.
+The distribution update rule for choosing data for training subsequent ensemble members, and the mechanism for determining the voting weights are the distinguishing characteristics of different Learn++ algorithms.
+
+This appendix presents an analysis of the original Learn++ incremental algorithm \cite{polikar01}. 
+It highlights a fundamental problem when Learn++ performs incremental learning during a scenario typical of a face recognition application.
+The original notation is presented in Table \ref{tab:learn++notation}, followed by the Learn++ algorithm (Algorithm \ref{alg:learn++}) and a discussion of its behavior in a face recognition context.
+Since the algorithm is presented with the original notation, some symbols overlap those used in the thesis (\textit{e.g.}, $D_t$), while new symbols represent terms already used in the thesis (\textit{e.g.}, $x_i$).
+
+%---------------------------------- Notation ----------------------------------%
+\renewcommand{\thetable}{\hspace{-3pt}-A I-\arabic{table}}
+\begin{table}[ht]
+  \centering
+  \captionsetup{list=no}
+  \caption{Learn++ notation as defined in \cite{polikar01}}
+  \label{tab:learn++notation}
+\begin{tabular}{|ll|}
+\hline
+$D_k$ & Learning data block at a time $k$ \\
+$D_t$ & Distribution for the sample selection at iteration $t$ \\
+$B_t$ & Normalized composite error of $H_t$ at iteration $t$ \\
+$\beta_t$ & Normalized error of hypothesis $h_t$ at iteration $t$ \\
+$E_t$ & Composite error of $H_t$ at iteration $t$ \\
+$\epsilon_t$ & Error of hypothesis $h_t$ at iteration $t$ \\
+$i$ & Training sample index from the subset $S_k$ \\
+$h_t$ & Hypothesis at iteration $t$ ($h(i)_t$ is the hypothesis for sample 
+			  $i$)\\
+$H_t$ & Composite hypothesis of all hypotheses $h_t$ computed so far at iteration $t$ \\
+$k$ & Time when data is available ($t$ during the thesis) \\
+$m$ & Number of training samples in the subset $S_k$ \\
+$S_k$ & Training data sequence $[(x_1,y_1),...,(x_i,y_i),...,(x_m,y_m)]$ from $D_k$ \\
+$t$ & Learn++ iteration \\
+$T_k$ & Number of Learn++ iterations, or hypothesis generated, at a time $k$ \\
+$TE_t$ & Test sample subset at Learn++ iteration $t$ \\
+$TR_t$ & Training sample subset at Learn++ iteration $t$ \\
+$\textbf{w}_t$ & $D_k$ sample weight vector to create distribution $D_t$ \\ 
+$x_i$ & training sample $i$ from $S_k$ \\
+$y_i$ & label $i$ from $S_k$ \\
+\hline
+\end{tabular}
+\end{table}
+%--------------------------------- \Notation ----------------------------------%
+
+Learn++ (\cite{polikar01}) is an AdaBoost-like algorithm for supervised incremental learning of new data acquired in batches. 
+It generates ensembles of weak hypotheses obtain by training a base classifier (weak learner) with updated distributions of the training data base.
+By optimizing the distribution update rule according incremental learning of new data, rather than accuracy like with AdaBoost (\cite{freund97}), Learn++ ensures that examples that are misclassified by the current ensemble have a high probability of being sampled.
+In this context, the examples that have a high probability of error are precisely those that are unknown or that have not yet been used to train the classifier.
+
+As Algorithm \ref{alg:learn++} shows, the inputs for Learn++ are (1) training data sequences $S = [(x_1,y_1),...,$ $(x_i,y_i), ... , (x_m,y_m)]$ formed by $m$ training examples $x_i$ and its corresponding label $y_i$ from the data block $D_k$, (2) a weak learning algorithm, WeakLearn, used as the base classifier, and (3) an integer $T_k$ that specifies the number of classifiers generated for a data block $D_k$ (\emph{i.e.}, number of Learn++ iterations).
+After learning each data block $D_k$, the result is a final hypothesis $H_\textit{final}$ that combines all hypotheses $H_t$ with a weighted majority.
+
+%----------------------------- Algorithm : learn++ ----------------------------%
+\renewcommand{\thealgorithm}{\hspace{-3pt}-A I-\arabic{algorithm}}
+\begin{algorithm}[]
+  \captionsetup{list=no}
+	\caption{Learn++ algorithm \cite{polikar01}}
+	\label{alg:learn++}
+ 	\fbox{\begin{minipage}{0.97\linewidth}\centering
+	\begin{algorithmic}[1]
+		\Require For each database drawn from $D_k$, $t=1,2,...,K$
+			\begin{itemize}
+				\item Sequence of $m$ training examples $S=[(x_1,y_1),...,
+				      (x_i,y_i),...,(x_m,y_m)]$.
+				\item WeakLearnin algorithm WeakLearn
+				\item Integer $T_k$ specifying the number of iterations.
+			\end{itemize}
+
+			\Ensure Final hypothesis consisting of the weight majority on the 
+						combined 
+						
+						\hspace{8pt}hypotheses $H_t$:\vspace{-10pt}
+				\begin{equation*}
+					H_\textit{final} = \begin{array}[t]{c}
+															 \text{arg max}\\^{y\in Y}
+														 \end{array} 
+														 \displaystyle\sum_{k=1}^K \ 
+														 \displaystyle\sum_{i:H_t(x)=y} \text{log}(1/B_t)
+				\end{equation*}
+		
+	\vspace{-4pt}
+		\For{$k=1,2,...,K$}\vspace{8pt}
+			\State \textbf{Initialize} $w_1(i)=D(i)=1/m, \forall i$, unless there is 
+						 prior knowledge to select
+						 
+						 \hspace{-6pt}otherwise.\vspace{8pt}
+			
+			\For{$t=1,2,...,T_k$}
+			
+				\State Set $D_t= w_t / \displaystyle\sum_{i=1}^m w_t(i)$ so that 
+							 $D_t$ is a distribution.\vspace{8pt}
+
+				\State Randomly choose training $TR_t$ and testing $TE_t$ subsets 
+							 according to $D_t$.\vspace{8pt}\label{l:random}
+							 
+				\State Call WeakLearn, providing it with $TR_t$.\vspace{8pt}
+				
+				\State Get back a hypothesis $h_t:X\rightarrow Y$, and calculate the 
+							 error of $h_t$:\vspace{-10pt}
+					\begin{equation*}
+						\epsilon_t = \displaystyle\sum_{i:h_t(x_i)\neq y_i} D_t(i)
+				  \end{equation*}
+				  
+					\vspace{-10pt}\hspace{14pt}on $S_t=TR_t+TE_t$. If $\epsilon_t>1/2$, 
+					set $t=t-1$, discard $h_t$ and go to step 2. 
+					
+					\hspace{14pt}Otherwise, compute normalized error as $\beta_t = \epsilon_t / (1-\epsilon_t)$.\vspace{8pt}
+				
+				\State Call weight majority, obtain the composite hypothesis 
+					\vspace{-10pt}
+					\begin{equation*}
+ 						H_t = \begin{array}[t]{c}
+										 \text{arg max}\\^{y\in Y}
+									\end{array}
+ 									\displaystyle\sum_{i:h_t(x)=y} \text{log}(1/\beta_t),
+				  \end{equation*}
+				  
+				  \vspace{-10pt}\hspace{14pt}and compute the composite error 
+				  \vspace{-10pt}
+					\begin{equation*}
+						E_t = \displaystyle\sum_{i:H_t(x_i)\neq y_i} D_t(i) = 
+						\displaystyle\sum_{i=1}^m D_t(i) \left[|H_t(x_i)\neq y_i | \right].
+				  \end{equation*}
+				  
+				  \vspace{-10pt}\hspace{14pt}If $E_t>1/2$, set $t=t-1$, discard $H_t$ 
+				  and go to step \ref{l:random}.\vspace{8pt}
+				
+				\State Set $B_t=E_t / (1-E_t)$ (normalized composite error), and update 
+							 the weights
+							 
+							 \hspace{14pt}of the instances:\vspace{-10pt}				
+				\begin{equation*}
+					\begin{split}
+							w_{t+1}(i) & =w_t(i) \times \left\{ \begin{array}{rl}
+													 \beta_t &\mbox{ if $H_t(x_i)=y_i$}, \\  
+													 1       &\mbox{ otherwise}\end{array} \right\}.	\\											           & =w_t(i) \times 
+													        B_t^{\left[|H_t(x_i)\neq y_i | \right]}
+					\end{split}
+				\end{equation*}
+				
+				\EndFor
+			\EndFor 
+	\end{algorithmic}
+	\end{minipage} }
+\end{algorithm}
+%------------------------------------------------------------------------------%
+
+Learn++ first initialize the weights $w_1(i)$ of the distribution $D$ so that each instance of $S$ has an equal likelihood of being selected.
+At each iteration $t=1,2,...,T_k$, the distribution $D_t$ is updated with the weights $w_t(i)$ (Line 4).
+A training and testing subsets ($TR_t$ and $TE_t$) are randomly selected according the distribution $D_t$.
+
+A base classifiers (WeakLearn) is then trained on $TR_t$ using supervised batch learning (Line 6) to provide an hypothesis $h_t$.
+It is the reason why the Learn++ algorithm isnot suitable for the application in this thesis.
+In the context of a face recognition learning scenario, as with many incremental learning problems, classes may often be updated or added only one at a time, leading the data blocks $D_k$, sequences $S_k$ and training data sets $TR_t$ to be composed of only one class.
+This means that each hypothesis $h_t$ obtained after training WeakLearn 
+on $TR_t$ would be the result of a one class classifier.
+When tested on $TE_t$ (with data from the same class than $TR_t$), these hypotheses would then always result in matching each instance $x_i$ to the same class $y_i$, thus yielding an error $\epsilon_t$ of 0 and a normalized error $\beta_t$ with also a value of 0 (Line 7).
+These biased error values has an impact on each subsequent steps of the Learn++ algorithm.
+Not only computing the composite hypothesis $H_t$ (Line 8) will involve a division by infinity, while the composite and normalized composite error values ($E_t$ and $B_t$) are also going to be equal to 0.
+Since the weights $w_t(i)$ are defined according the latter, they are going to be updated to 0 (Line 9).
+
+For Learn++ to work, this indicates that \emph{all} classes needs to be present within each data block $D_k$.
+In the eventuality that not one, but several classes are updated or added at a given time, Learn++ will still be problematic.
+While all error values are not going to be equal to 0, due to the presence of several classes, the hypotheses for a data block $D_k$ will still result in classes contained in that block only.
+If these classes are not present on subsequent blocks, these classifiers will perform poorly during the test phase of Algorithm \ref{alg:learn++} (Line 7).
+The weights associated with them will then decrease and the final composite hypothesis $H_\textit{final}$ will be unable to predict them.
+On the other hand, the new hypotheses added in the ensemble are not going to be able to predict classes previously enrolled in the system.

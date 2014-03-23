@@ -1,0 +1,91 @@
+\item [$\textbf{a}$] Input feature vector
+\item [$\textbf{A}$] Complemented input feature vector
+\item [$\alpha$] FAM choice hyperparameter
+\item [$B_t$] New batch learning data block available that combines all available data up to a time $t$ (\emph{i.e.},$D_1 \cup ... \cup D_t$)
+\item [$\beta$] FAM learning hyperparameter
+\item [$\mathbf{c}$] Class input associated to $\textbf{a}$ for supervised learning
+\item [$C_k$] Label of class $k$
+\item [$|C_k|_\mathbf{LTM}$] Maximal number of samples per class in the long term memory
+\item [$D_t$] New incremental learning data block available at a time $t$
+\item [$D_t^\text{t}$] Training data set at a time $t$
+\item [$D_t^\text{v}$] Validation data set at a time $t$
+\item [$D_t^\text{f}$] Fitness estimation data set at a time $t$
+\item [$\delta_{e_1e_2}$] Particle diversity between two ensemble members $e_1$ and $e_2$
+\item [$\Delta$] Distance from a local best particle within which no personal best value can be memorized by other particles among the swarm
+\item [$\Delta\theta_{e_1e_2}$] Diversity between two classifiers $e_1$ and $e_2$ determined with a FAM specific indicator
+\item [$e_1,e_2$] Two ensemble members
+\item [$\textit{EoFAM}$] An ensemble of fuzzy ARTMAP networks
+\item [$\epsilon$] FAM match-tracking hyperparameter
+\item [$f(\textbf{h})$] Objective function for a fuzzy ARTMAP hyperparameter vector $\textbf{h}$ in a static optimization environment
+\item [$f(\textbf{h},t)$] Objective function for a fuzzy ARTMAP hyperparameter vector $\textbf{h}$ and at a time $t$ in a dynamic optimization environment
+\item [$f_e(\mathbf{h},t)$] Objective function defined by the generalization error rate.
+\item [$f_o(\textbf{h}_n,t)$] Objective function $o$ (during MOO)
+\item [$f_s(\mathbf{h},t)$] Objective function defined by the size of the $F_2$ layer (\emph{i.e.}, number of $F_2$ layer nodes)
+\item [$F^{ab}$] FAM map field
+\item [$F_1$] FAM input layer
+\item [$F_2$] FAM competitive hidden layer
+\item [$\textit{FAM}_\text{estimation}$] FAM network used to estimate fitness with the data set $D_t^\text{f}$
+\item [$\textit{FAM}_n$] FAM network associated to the best position of particle $n$
+\item [$\textit{FAM}_{n,o}$] FAM network associated to the best position of particle $n$ for the objective $o$ (during MOO)
+\item [$\textit{FAM}_\text{optimal}$] FAM network with the highest accuracy obtained after optimization on a learning block $D_t$
+\item [$\textit{FAM}_n^\text{start}$] FAM network that defines the initial state of the particle $n$ prior learning data block $D_t$. During mono-objective optimization it corresponds to the best position of particle $n$, while it is associated with the current position of particle $n$ during MOO.
+\item [$\textit{FAM}_\text{temp}$] Temporary fuzzy ARTMAP network used during fitness estimation
+\item [$\phi$] Influences for the ADNPSO algorithm
+\item [$\Phi$] Total number of influences for the ADNPSO algorithm
+\item [$gbest$] Index of the global best particle (\emph{i.e.}, the one with the highest fitness)
+\item [GBEST] AMCS that uses only the FAM network corresponding to the DPSO global best solution of a swarm evolve with the DPSO-based incremental learning strategy presented in Chapter 2
+\item [GREEDY$_\text{a}$] AMCS that uses an ensemble of FAM networks found using greedy search based on accuracy selected among a swarm evolve with the DPSO-based incremental learning strategy presented in Chapter 2
+\item [$\textbf{h}$] FAM hyperparameter vector $\textbf{h} = (\alpha, \beta, \epsilon, \bar{\rho})$
+\item [$\textbf{h}^d$] Dominant hyperparameter vector in the objective space when compared to another vector $\textbf{h}$
+\item [$\textbf{h}_n(\tau)$] FAM hyperparameter vector of particle $n$ at an iteration $\tau$
+\item [$\textbf{h}_n^*$] FAM hyperparameter vector of particle $n$ that yielded the best performance
+\item [$\textbf{h}_{n,o}^*$] FAM hyperparameter vector of particle $n$ that yielded the best performance on the objective function $o$
+\item [$\textbf{h}_\text{ro}(t)$] ACS that uses FAM hyperparamaters that are re-optimized on each learning block $D_t$ with canonical PSO. Unlike with dynamic optimization, particle positions, fitness, and memory are randomly (re)initialized with each incoming $D_t$.
+\item [$\textbf{h}_\text{ro}^B(t)$] ACS that uses FAM hyperparamaters that are (re)optimized on each learning block $B_t$ with canonical PSO. Unlike with dynamic optimization, particle positions are randomly initialized with each incoming $D_t$. 
+\item [$\textbf{h}_\text{std}$] ACS that uses standard FAM hyperparamaters
+\item [$\textbf{h}_\text{dnc}(t)$] ACS that uses FAM hyperparamaters that are optimized on each learning block $D_t$ using dynamic optimization with DNPSO
+\item [$\textbf{h}_\text{dnc}(1)$] ACS that uses FAM hyperparamaters that are optimized only on $D_1$ using DNPSO and are then fixed
+\item [$\textbf{h}_\text{stc}(t)$] ACS that uses FAM hyperparamaters system parameters that are optimized  using static optimization with DNPSO
+\item [$\textbf{h}_\text{cnl}(t)$] that are optimized using static optimization with canonical PSO
+\item [$\textit{hyp}_t$] Classifier hypothesis (model and a priori knowledge) at a time $t$
+\item [$\theta_e$] FAM ambiguity for an ensemble member $e$
+\item [$i$] FAM $F_1$ layer index
+\item [$I$] Number if input features
+\item [$j$] FAM $F_2$ layer node index
+\item [$j^*$] FAM $F_2$ layer node with the highest choice function value
+\item [$J$] Total number of $F_2$ layer nodes
+\item [$J_n$] Total number of $F_2$ layer nodes of the fuzzy ARTMAP network associated to particle $n$
+\item [$k$] Class index
+\item [$k(j)$] Class index associated with $F_2$ layer node $j$
+\item [$k^*$] Class predicted by the fuzzy ARTMAP classifier (\emph{i.e.}, associated to the winning node $j^*$)
+\item [$K$] Total number of classes
+\item [LBESTS$_\text{+d}$] AMCS that uses the ensemble of FAM networks selected among a swarm evolved with the DPSO-based incremental learning strategy and the diversity-based greedy search. Both methods are presented in Chapter 2.
+\item [$\lambda_D$] Proportion of the learning data block $D_t$ assigned to the long term memory
+\item [$n$] Particle index
+\item [$N$] Total number of particles
+\item [$N_\text{ss}$] Number of subswarms
+\item [$\mathbf{o}$] Set of objective for a given optimization problem
+\item [$o$] Objective index
+\item [$O$] Total number of objectives for a given optimization problem
+\item [$p_k(\textbf{a})$] Class $k$ underlying probability distribution for a static classification environment
+\item [$p_k(\textbf{a},t)$] Class $k$ underlying probability distribution for a changing classification environment
+\item [PSO$_\text{B}$] AMCS that uses the entire swarm of FAMs trained with a canonical PSO batch learning strategy
+\item [$\rho$] FAM vigilance hyperparameter
+\item [$\bar{\rho}$] FAM baseline vigilance hyperparameter
+\item [$rho_{e_1e_2}$] Correlation between two classifiers $e_1$ and $e_2$ determined with the correlation coefficient
+\item [$Q_{e_1e_2}$] Correlation between two classifiers $e_1$ and $e_2$ determined with the $Q$ statistic
+\item [$r_{\theta}$] Random number evaluated before each iteration for each influence of each particle
+\item [SWARM] AMCS that uses the ensemble of FAM networks build with the entire swarm evolve with the DPSO-based incremental learning strategy presented in Chapter 2
+\item [$t$] Discreet time when new data becomes available
+\item [$T$] Total number of learning blocks
+\item [$T_{j}$] Choice function for the fuzzy ARTMAP $F_2$ layer node $j$
+\item [$\tau$] Iteration index during optimization
+\item [$\tau*$] Number of iterations before one of the stopping criteria are met
+\item [$\textbf{W}$] FAM weight matrix linking the $F_1$ layer to the $F_2$ layer
+\item [$\textbf{w}_j$] FAM weight vector linking the $F_1$ layer to the $F_2$ layer node $j$
+\item [$w_{ij}$] FAM weight vector linking the $F_1$ layer node $i$ to node $j$
+\item [$\textbf{W}^{ab}$] FAM weight matrix linking the $F_2$ layer to the $F^{ab}$ layer
+\item [$\textbf{w}^{ab}_j$] FAM weight matrix linking the $F_2$ layer node $j$ to the $F^{ab}$ layer
+\item [$w^{ab}_{jk}$] FAM weight matrix linking the $F_2$ layer node $j$ to the $F^{ab}$ layer node $k$
+\item [$w_{\phi}$] PSO weights. While $w_0$ represents inertia, $\{w_{\phi}|\phi \neq 0\}$ represents the amount of influence $\phi$ on each particle.
+\item [$\Omega$] Set of all classes

@@ -1,0 +1,26 @@
+In video-based face recognition applications, matching is typically performed by comparing query samples against biometric models (\emph{i.e.}, an individual's facial model) that is designed with reference samples captured during an enrollment process.
+Although statistical and neural pattern classifiers may represent a flexible solution to this kind of problem, their performance depends heavily on the availability of representative reference data.
+With operators involved in the data acquisition process, collection and analysis of reference data is often expensive and time consuming. However, although a limited amount of data is initially available during enrollment, new reference data may be acquired and labeled by an operator over time.
+Still, due to a limited control over changing operational conditions and personal physiology, classification systems used for video-based face recognition are confronted to complex and changing pattern recognition environments.
+
+This thesis concerns adaptive multiclassifier systems (AMCSs) for incremental learning of new data during enrollment and update of biometric models.
+To avoid knowledge (facial models) corruption over time, the proposed AMCS uses a supervised incremental learning strategy based on dynamic particle swarm optimization (DPSO) to evolve a swarm of fuzzy ARTMAP (FAM) neural networks in response to new data.
+As each particle in a FAM hyperparameter search space corresponds to a FAM network, the learning strategy adapts learning dynamics by co-optimizing all their parameters -- hyperparameters, weights, and architecture -- in order to maximize accuracy, while minimizing computational cost and memory resources. To achieve this, the relationship between the classification and optimization environments is studied and characterized, leading to these additional contributions.
+
+An initial version of this DPSO-based incremental learning strategy was applied to an adaptive classification system (ACS), where the accuracy of a single FAM neural network is maximized.
+It is shown that the original definition of a classification system capable of supervised incremental learning must be reconsidered in two ways.
+Not only must a classifier's learning dynamics be adapted to maintain a high level of performance through time, but some previously acquired learning validation data must also be used during adaptation.
+It is empirically shown that adapting a FAM during incremental learning constitutes a type III dynamic optimization problem in the search space, where the local optima values and their corresponding position change in time. Results also illustrate the necessity of a long term memory (LTM) to store previously acquired data for unbiased validation and performance estimation.
+
+The DPSO-based incremental learning strategy was then modified to evolve the swarm (or pool) of FAM networks within an AMCS.
+A key element for the success of ensembles is tackled: classifier diversity. With several correlation and diversity indicators, it is shown that genotype (\emph{i.e.}, hyperparameters) diversity in the optimization environment is correlated with classifier diversity in the classification environment. Following this result, properties of a DPSO algorithm that seeks to maintain genotype particle diversity to detect and follow local optima are exploited to generate and evolve diversified pools of FAM classifiers. Furthermore, a greedy search algorithm is presented to perform an efficient ensemble selection based on accuracy and genotype diversity.
+This search algorithm allows for diversified ensembles without evaluating costly classifier diversity indicators, and selected ensembles also yield accuracy comparable to that of reference ensemble-based and batch learning techniques, with only a fraction of the resources.
+
+Finally, after studying the relationship between the classification environment and the search space, the objective space of the optimization environment is also considered.
+An aggregated dynamical niching particle swarm optimization (ADNPSO) algorithm is presented to guide the FAM networks according two objectives: FAM accuracy and computational cost.
+Instead of purely solving a multi-objective optimization problem to provide a Pareto-optimal front, the ADNPSO algorithm aims to generate pools of classifiers among which both genotype and phenotype (\emph{i.e.}, objectives) diversity are maximized.
+ADNPSO thus uses information in the search spaces to guide particles towards different local Pareto-optimal fronts in the objective space.
+A specialized archive is then used to categorize solutions according to FAM network size and then capture locally non-dominated classifiers.
+These two components are then integrated to the AMCS through an ADNPSO-based incremental learning strategy. 
+
+The AMCSs proposed in this thesis are promising since they create ensembles of classifiers designed with the ADNPSO-based incremental learning strategy and provide a high level of accuracy that is statistically comparable to that obtained through mono-objective optimization and reference batch learning techniques, and yet requires a fraction of the computational cost.

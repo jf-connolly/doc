@@ -1,0 +1,1626 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Modèle LaTeX pour le mémoire de thèse de l'ETS
+%% Basé sur la classe de base book.cls, généralement positionné 
+%% dans un système linux à
+%% /usr/share/texmf/tex/latex/base/book.cls
+%%
+%% Modifications par Christophe Pagano (cpagano@livia.etsmtl.ca)
+%% [13 Mars 2011]
+%% Ligne 564: modification de l'affichage des titres des chapitres dans le TOC. Remplacement de la box par \numberline
+%% Aussi, changement de la valeur de @tempdima ligne 893 pour que ça rende mieux.
+%% l. 1118 et 1073: suppression de la box avant le titre des tabs et figures dans les listes
+%%
+%% Modifications par Christophe Pagano (cpagano@livia.etsmtl.ca)
+%% [12 Mai 2011]
+%% \setcounter{page}{1} dans l'intro pour qu'elle soit en page 1
+%% Suppression du reset de page dans title et jury pour que le titre soit la page I
+%%
+%% Modifications par Christophe Pagano (cpagano@livia.etsmtl.ca)
+%% [11 Mai 2011]
+%% Utilisation d'une newcommand plutôt qu'une savebox pour stocker les mots clé des abstract.
+%% Corrige le problème du non retour à la ligne.
+%%
+%% Modifications par Christophe Pagano (cpagano@livia.etsmtl.ca)
+%% [30 Mars 2011]
+%% Ligne 564: modification de l'affichage des titres des chapitres dans le TOC. Le nom et numéro sont maintenant dans 
+%% une box de 7em, ce qui aligne les titres. 
+%% Ligne 1235 - 1245: changement de la notation des figures: Exemple Figure-A V-1. Aussi, pas en gras.
+%% Changement de l'ordre d'apparition du jury: examinateur externe avant membre du jury.
+%%
+%% Modifications par Christophe Pagano (cpagano@livia.etsmtl.ca)
+%% [24 Mars 2011]
+%% Ajout de ':' après 'jury composé de'
+%% Ajout de 3 retours à la ligne avant l'affichage des mots clés pour les abstract.
+%% Commentaire de la section pour restaurer l'indentation des puces (ligne 342)
+%% ``Figure'' plus en gras.
+%%  Ajout de saut de ligne avant figure.
+%%
+%% Modifications par Christophe Pagano (cpagano@livia.etsmtl.ca)
+%% [9 Mars 2011]
+%% Changement de la taille du texte (small) et de l'interligne (simple) pour la partie creative commons et copyright.
+%%
+%% Modifications par Paulo Cavalin (cavalin@livia.etsmtl.ca)
+%% [17 dec 2010]
+%% Modifications pour l'impression recto-verso
+%%
+%% [16 nov 2010]
+%% Traduction en anglais
+%%
+%% [27 aout 2010]
+%% Mises à jour du gabarit pour qu'il soit disponibilisé officielement par le décanat
+%% Utilisation du package geometry pour définir les marges
+%% corrections relatives au guide daté du 27-08-2010
+%%
+%% Corrections apportées par Cécile Le Cocq (cecile.lecocq@etsmtl.ca)
+%%
+%% [17 mars 2008]
+%% corrections relatives au nouveau guide de rédaction daté du 12 novembre 2007
+%%
+%% Commentaires (et modifications?) par Luis Da Costa (costa@livia.etsmtl.ca)
+%%
+%% [14 Juillet 2006]  
+%% Il faut laisser une ligne en blanc AVANT et APRES une citation de plus de 3 lignes: 
+%% 
+%% Zinedine Zidane a remarque 
+%% [LIGNE EN BLANC]
+%% \begin{quote} 
+%%      parler de ma mere et de ma soeur merite bien un coup de boule. 
+%% \end{quote} 
+%% [LIGNE EN BLANC]
+%%  
+%% [14 Juillet 2006]  
+%% Dans la table des matieres il doit y avoir une indentation. 
+%% J'ai donc commenté ce que Seb avait implementé (chercher LUIS dans ce document
+%% pour voir).  
+%% 
+%% Version 0.4 
+%% Date : 2005/08/04
+%%
+%% Modifications par S. Piccand (sebastien.piccand@livia.etsmtl.ca)
+%%
+%% thETS4 est basé sur thETS3
+%% Quelques corrections au niveau de la table des matières
+%%  - la division en section d'un chapitre est séparée par une ligne de l'intitulé du chapitre
+%%  - les annexes sont correctement gérées
+%%  - la bibliographie est corrigée en utilisant le package natbib.sty et le style ETS.bst
+%%  - ajout de l'option memoire. Par defaut il s'agit d'une thèse
+%%  - correction des figures, sous figures, tables
+%%  - correction des footnotes, utiliser \footnote{} comme d'habitude
+%%  - correction de l'environnement "enumerate"
+%%  - correction des citations utiliser \quote{} comme d'habitude
+%%
+%% Macros supplémentaires pour ajouter plus facilement des figures/tableaux et y faire référence
+%% 
+%% Non corrigé de la version 0.3 :
+%%  * Dans les différentes listes (figures, tables, etc.) il n'y a pas assez d'espace entre la fin
+%%     du titre et les numéros. Une solution consiste à utiliser des noms de figure courts.
+%%  * Les titres des sections/chapitre/soussections/etc doivent être courts pour ne pas passer à
+%%     la ligne dans la table des matières.
+%%  * Les citations ne sont pas encore bonnes.
+%%
+%%
+%% Version 0.3
+%% Date : 2004/12/17
+%% 
+%% Modifications par G. Tremblay (guillaume.tremblay@livia.etsmtl.ca)
+%% 
+%% thETS3 est basé sur thETS2 
+%% Quelques corrections apportées par rapport à la version 0.2: 
+%% 
+%% Utilisation de algorithme2e.sty sans problèmes de compatibilité. Correction faite par F. Grandidier
+%% et appliquée par G. Tremblay
+%% 
+%% Les citations de plus de 3 lignes sont à interligne simple tel qu'exigé par le Décanat (utilisez begin{quoteETS})
+%%
+%% Les footnotes sont remplacées par de footnoteETS pour ne pas avoir d'indentation de paragraphe
+%%
+%%
+%% Version 0.2 
+%% Date: 2003/05/06
+%% 
+%% Par F. Grandidier (gfrede@livia.etsmtl.ca)
+%%
+%% Ajout ver 0.2: alignement du titre du chapitre dans la table
+%%                des matières lorsqu'il tient sur plusieurs
+%%                lignes
+%% 
+%% 
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\filedate{2003/01/24}
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01] %% Mis par défaut
+\ProvidesClass{thETS}[\filedate\space Standard ETS class]
+
+%% Mêmes options possibles que celle de la classe book.cls
+%% Cependant tous ne va peut être pas marcher comme dans book...
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}} 
+
+\newcommand{\TypeDoc}{these}
+\DeclareOption{memoire}{%
+  \renewcommand{\TypeDoc}{memoire}
+}
+\DeclareOption{thesepararticles}{%
+  \renewcommand{\TypeDoc}{thesepararticles}
+}
+
+\newcommand{\TypeLic}{reserved}
+\DeclareOption{creativecommons}{
+   \renewcommand{\TypeLic}{creativecommons}
+}
+
+
+\ProcessOptions
+
+\LoadClass{book} %% Chargement de la classe book
+\RequirePackage{mathptmx} %% Police Times
+%\RequirePackage[frenchb]{babel} %% Francisation du document
+\RequirePackage[english]{babel} %% Francisation du document
+\RequirePackage[latin1]{inputenc} %% Prise en compte de la frappe de caractères accentués
+\RequirePackage[T1]{fontenc} %% Codage standard des fontes LaTeX pour le français
+\RequirePackage{calc} %% permet de réaliser des additions et soustractions de valeurs lors d'affectation de variables
+\RequirePackage{setspace}
+\RequirePackage{ifthen} %% Permet de réaliser des tests sur des variables
+\RequirePackage{amsthm} % clc
+\RequirePackage{longtable}
+\RequirePackage{float}
+\RequirePackage{listings} %% Code listings (extraits de code)
+\RequirePackage[paper=letterpaper,tmargin=1.5in,lmargin=1.5in,rmargin=0.75in,bmargin=0.75in,body={6.25in,8.75in}]{geometry}
+\RequirePackage[labelfont={bf},margin=10pt,justification=centering]{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Définition de commandes pour la présentation du jury
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\PrefDirect}{Mr.}
+\newcommand{\NomDirect}{Nom du directeur de recherche}
+\ifthenelse{\equal{\TypeDoc}{these}}{
+  \newcommand{\TxtDirect}{Thesis director}
+}{
+  \newcommand{\TxtDirect}{Thesis director}
+}
+\newcommand{\AffilDirect}{Affiliation du directeur}
+\newcommand{\PrefCoDirect}{Mr.}
+\newcommand{\NomCoDirect}{Nom du co-directeur}
+\newcommand{\TxtCoDirect}{Thesis co-director}
+\newcommand{\AffilCoDirect}{Affiliation du codirecteur}
+\newcommand{\PrefPresid}{Mr.}
+\newcommand{\NomPresid}{Nom du pr\'esident du jury}
+\newcommand{\TxtPresid}{Committee president}
+\newcommand{\AffilPresid}{Affiliation du pr\'esident du jury}
+\newcommand{\PrefExamExt}{Mr.}
+\newcommand{\NomExamExt}{Nom de l'examinateur externe}
+\newcommand{\TxtExamExt}{External examiner}
+\newcommand{\PlusTxtExamExt}{Blabla}
+\newcommand{\AffilExamExt}{Affiliation de l'examinateur externe}
+\newcommand{\PrefJury}{Mr.}
+\newcommand{\NomJury}{Nom d'un membre du jury}
+\newcommand{\TxtJury}{Examiner}
+%\newcommand{\TxtJury}{membre du jury}
+%\newcommand{\TxtJury}{}    % modifi\'epour mon membre du jury
+\newcommand{\PlusTxtJury}{Blabla}
+\newcommand{\AffilJury}{Affiliation du membre du jury}
+\newcommand{\PrefJuryB}{Mr.}
+\newcommand{\NomJuryB}{Nom d'un membre du jury}
+\newcommand{\TxtJuryB}{invited examiner}
+\newcommand{\PlusTxtJuryB}{Blabla}
+\newcommand{\AffilJuryB}{Affiliation du membre du jury}
+
+%% Directeur de thèse
+\newcommand{\directeur}[3]{%
+  \renewcommand{\PrefDirect}{#1}%
+  \ifthenelse{\equal{#1}{Mrs.}}{% Permet de modifier pour le f\'einin
+    \ifthenelse{\equal{\TypeDoc}{these}}{
+      \renewcommand{\TxtDirect}{thesis director}
+    }{%
+      \renewcommand{\TxtDirect}{memorandum director}}  }{  }%
+  \renewcommand{\NomDirect}{#2}%
+  \renewcommand{\AffilDirect}{#3}%
+  }%
+%%% Co-directeur de th\'ee
+\newcommand{\codirecteur}[3]{%
+  \renewcommand{\PrefCoDirect}{#1}%
+  \ifthenelse{\equal{#1}{Mme}}{%
+    \renewcommand{\TxtCoDirect}{codirector}}{}%
+  \renewcommand{\NomCoDirect}{#2}%
+  \renewcommand{\AffilCoDirect}{#3}%
+  }%
+%% Pr\'eident du jury
+\newcommand{\president}[3]{%
+  \renewcommand{\PrefPresid}{#1}%
+  \ifthenelse{\equal{#1}{Mme}}{%
+    \renewcommand{\TxtPresid}{committee president}}{}%
+  \renewcommand{\NomPresid}{#2}%
+  \renewcommand{\AffilPresid}{#3}%
+  }%
+%% Examinateur externe
+\newcommand{\examinexterne}[4]{%
+  \renewcommand{\PrefExamExt}{#1}%
+  \ifthenelse{\equal{#1}{Mme}}{%
+    \renewcommand{\TxtExamExt}{extern examiner}}{}%
+  \renewcommand{\NomExamExt}{#2}%
+  \renewcommand{\AffilExamExt}{#3}%
+  \renewcommand{\PlusTxtExamExt}{#4}%
+  }%
+%% Membre du jury
+\newcommand{\jury}[4]{%
+  \renewcommand{\PrefJury}{#1}%
+  \ifthenelse{\equal{#1}{Mme}}{%
+    \renewcommand{\TxtJury}{examiner}}{}%
+  \renewcommand{\NomJury}{#2}%
+  \renewcommand{\AffilJury}{#3}%
+  \renewcommand{\PlusTxtJury}{#4}%
+  }%
+%% Membre du jury
+\newcommand{\juryB}[4]{%
+  \renewcommand{\PrefJuryB}{#1}%
+  \ifthenelse{\equal{#1}{Mme}}{%
+    \renewcommand{\TxtJuryB}{invited examiner}}{}%
+  \renewcommand{\NomJuryB}{#2}%
+  \renewcommand{\AffilJuryB}{#3}%
+  \renewcommand{\PlusTxtJuryB}{#4}%
+  }%
+%% Bon làlà, si il y a d'autres membres ça devient le bordel. 2 possibilité : 
+%% - rendre le code dynamique, mais ça à l'air vachement compliqué
+%% - créer des variables examext2, juryB, jury3,... (plus facile)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Pour le copyright, c'est Prénom Nom
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\authorcopyright#1{\gdef\@authorcopyright{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Variable associée aux dates de
+%% soutenance et de dépôt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\datesoutenance#1{\gdef\@datesoutenance{#1}}
+\def\datedepot#1{\gdef\@datedepot{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Variable pour la mise en page des chapitres dans
+%% la table des matières
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\largChap}
+\newlength{\largNum}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Marges horizontales du document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newlength{\margegauche}
+%\setlength{\margegauche}{108.405pt}%{1.5in}
+%\newlength{\margedroite}
+%\setlength{\margedroite}{54.2025pt}%{72.27pt}%{1in}%{0.75in}
+%\setlength{\oddsidemargin}{\margegauche - (72.27pt + \hoffset)}%{\margegauche - (1in + \hoffset)}
+%%\setlength{\evensidemargin}{\margedroite - (72.27pt + \hoffset)}%{\margedroite - (1in + \hoffset)} % Pour une mise en page recto-verso
+%\setlength{\textwidth}{\paperwidth - \margegauche - \margedroite}
+%%\setlength{\marginparsep}{0pt}
+%%\setlength{\marginparwidth}{\margedroite}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Marges verticales du document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newlength{\margehaut}
+%\setlength{\margehaut}{108.405pt}%{1.5in}
+%\newlength{\margebas}
+%\setlength{\margebas}{54.2025pt}%{0.75in}
+%\setlength{\topmargin}{-15.363pt}%{-5.4mm} % 1 in - 20 mm
+%\setlength{\headheight}{12pt}
+%\setlength{\headsep}{\margehaut - \headheight - \topmargin - 72.27pt - \voffset}%{\margehaut - \headheight - \topmargin - 1in - \voffset}
+%\setlength{\textheight}{\paperheight - \margehaut - \margebas}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Marges autour des objets flottants : figures et tableaux
+%% Ce n'est pas au point, il y aurait des ajustements à faire.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength\abovecaptionskip{1em}
+\setlength\belowcaptionskip{1em}
+%\setlength\floatsep{1em}
+\setlength\textfloatsep{12pt}
+%\setlength\intextsep{1em}
+
+%%%%%%%%%%%%%%%%%%%
+%% Marge la table des matières et les différentes listes
+%%%%%%%%%%%%%%%%%%%
+\newlength{\tocRightMargin} % Marge droite
+\setlength{\tocRightMargin}{2cm}
+\newlength{\tocLeftMarginSecondLine}
+\setlength{\tocLeftMarginSecondLine}{6.1em} % Marge gauche quand on va à la ligne pour les sections et sous sections
+\newlength{\tocLeftMarginSecondLineChapter}
+\setlength{\tocLeftMarginSecondLineChapter}{6.1em} % Marge gauche quand on va à la ligne pour les chapitres et annexes
+\newlength{\tocLeftMarginSecondLineFigure}
+%\setlength{\tocLeftMarginSecondLineFigure}{5.2em} % Marge gauche quand on va à la ligne pour les figures
+\setlength{\tocLeftMarginSecondLineFigure}{6.5em} % Marge gauche quand on va à la ligne pour les figures
+\newlength{\tocLeftMarginSecondLineTable}
+%\setlength{\tocLeftMarginSecondLineTable}{5.9em} % Marge gauche quand on va à la ligne pour les tableaux
+\setlength{\tocLeftMarginSecondLineTable}{7.1em} % Marge gauche quand on va à la ligne pour les tableaux, MODIFIEE car besoin de decaler titres des tableaux vers la droite !!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fraction maxi des objets flottants 
+%% en haut et bas de page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\floatpagefraction}{.99}
+\renewcommand{\textfraction}{.01}
+\renewcommand{\topfraction}{.99}
+\renewcommand{\bottomfraction}{.99}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Interligne du document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\mystretch{1.5}
+\def\baselinestretch{\mystretch}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Espace entre 2 paragraphes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parskip}{12pt} % 12pt 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Pas d'indentation des paragraphes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parindent}{0pt}
+%\ifx\frenchbsetup\undefined
+%\FrenchItemizeSpacingfalse
+%\else
+%\frenchbsetup{CompactItemize=false}
+%\fi 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%% Pour éviter les veuves et orphelins
+%% (lignes seules en début ou fin de pages)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+
+%%% footnote 
+%
+% Pour enlever l'indentation des footnotes (LUIS)
+%
+\newlength{\NameOfNewDefinedLength}
+
+\newcommand{\footnoteETS}[1]%
+{\footnote{\setlength{\NameOfNewDefinedLength}{\textwidth}
+                 \advance\leftskip -2.7mm  %%
+                 \addtolength{\NameOfNewDefinedLength}{-2em+2.mm}
+                 \hskip -1.mm
+                 \parbox[t]{\NameOfNewDefinedLength}{\raggedright #1}}}
+
+% \newcommand{\footnoteETS}{\footnote} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Page titre
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lediplome}{
+  THE DEGREE OF DOCTOR OF PHILOSOPHY\\
+  Ph.D.
+}
+\newcommand{\diplome}[1]{
+  \renewcommand{\lediplome}{#1}
+}  
+
+\renewcommand{\maketitle}{\begin{titlepage}
+ \renewcommand{\baselinestretch}{1}\small\normalsize % Interligne simple
+    \let\footnotesize\small%
+    \let\footnoterule\relax%
+    \let \footnote \thanks%
+   \begin{center}
+      ÉCOLE DE TECHNOLOGIE SUPÉRIEURE\\
+      UNIVERSITÉ DU QUÉBEC
+      \vfill
+      \ifthenelse{\equal{\TypeDoc}{thesepararticles}}{
+        MANUSCRIPT-BASED THESIS PRESENTED
+      }{
+        THESIS PRESENTED
+      } TO\\
+      ÉCOLE DE TECHNOLOGIE SUPÉRIEURE
+      \vfill
+      IN PARTIAL FULFILLMENT OF THE REQUIREMENTS FOR\\
+      \lediplome 
+      \vfill
+      BY\\
+	\@author
+      %\MakeUppercase{\@author}%
+      \vfill
+      \MakeUppercase{\@title}%
+      \vfill
+      MONTREAL, \MakeUppercase{\@datedepot}%
+      
+      \vspace{1em}%{.7cm}
+      {\scriptsize 
+      \ifthenelse{\equal{\TypeLic}{reserved}}{ 
+          \copyright~Copyright \number\year \ reserved by \@authorcopyright
+      }{
+         \includegraphics{logocc.png} \@authorcopyright \ \number\year
+      }
+      }%
+   \end{center}
+   \end{titlepage}
+   \clearpage
+   
+   %Verso 
+  \newpage     
+  ~\\
+  \vspace{15cm}
+
+   %\begin{center}
+   \ifthenelse{\equal{\TypeLic}{reserved}}{%
+   \fbox{\parbox{6.4in}{
+   %% Interligne de 1 et taille de 10pt pour le texte
+   \renewcommand{\baselinestretch}{1}\footnotesize\footnotesize
+
+   \copyright~Copyright reserved
+    \newline
+   It is forbidden to reproduce, save or share the content of this document either in whole or in parts. The reader who 
+   wishes to print or save this document on any media must first get the permission of the author.
+   }}
+   }{%
+   \fbox{\parbox{6.4in}{
+   %% Interligne de 1 et taille de 10pt pour le texte
+   \renewcommand{\baselinestretch}{1}\footnotesize\footnotesize
+
+   \includegraphics{logocc.png}
+   \newline
+   This Creative Commons license allows readers to download this work and share it with others as long as the author is 
+   credited. The content of this work cannot be modified in any way or used commercially.
+   }}
+   }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Page de présentation du jury
+% LUIS A ELIMINE L'ESPACE ENTRE LES NOMS ET LES AFFILIATIONS (Décanat...) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\presentjury{\begin{jurypage}%
+  \let\footnotesize\small%
+  \let\footnoterule\relax%
+  \begin{center}%
+    \renewcommand{\baselinestretch}{2}\small\normalsize
+    \textbf{BOARD OF EXAMINERS}\\
+    \ifthenelse{\equal{\TypeDoc}{these}}{
+      THIS THESIS HAS BEEN EVALUATED
+    }{THIS THESIS WAS EVALUATED
+    }\\
+    BY THE FOLLOWING BOARD OF EXAMINERS:\\
+    \vspace{6em}%
+  \end{center}
+  \begin{flushleft}
+    \renewcommand{\baselinestretch}{1}\small\normalsize
+    % Directeur de mémoire
+    \PrefDirect~\NomDirect,~\TxtDirect\\
+    % \vspace{3pt} % LUIS 
+    \AffilDirect\par
+    \vspace{1em}
+    % Codirecteur optionnel
+    \ifthenelse{\equal{\NomCoDirect}{Nom du co-directeur}}{}{%
+      \PrefCoDirect~\NomCoDirect,~\TxtCoDirect\\%
+      \vspace{3pt}
+      \AffilCoDirect\par%
+      \vspace{1em}
+    }%
+    % Président du jury
+    \PrefPresid~\NomPresid,~\TxtPresid\\%
+    % \vspace{3pt}
+    \AffilPresid\par%
+    \vspace{1em}%
+
+    % Examinateur externe
+    \ifthenelse{\equal{\NomExamExt}{Nom de l'examinateur externe}}{}{%
+      %\PrefExamExt~\NomExamExt\\
+      \PrefExamExt~\NomExamExt,~\TxtExamExt\\ % check mnk
+%	\PrefExamExt~\NomExamExt\ifthenelse{\equal{\PlusTxtExamExt}{}}{,~}{,~\PlusTxtExamExt,~}%
+      %\TxtExamExt\\
+      % \vspace{3pt}
+      \AffilExamExt\par%
+      \vspace{1em}
+    }%
+    
+    
+ % Jury
+    \ifthenelse{\equal{\NomExamExt}{Nom d'un membre du jury}}{}{%
+	%\PrefJury~\NomJury\\
+	\PrefJury~\NomJury,~\TxtJury\\ %check mnk
+%      \PrefJury~\NomJury\ifthenelse{\equal{\PlusTxtJury}{}}{,~}{,~\PlusTxtJury}%
+%     \TxtJury\\%
+      % \vspace{3pt}
+      \AffilJury\par%
+      \vspace{1em}
+    }%
+
+
+   
+    
+    % JuryB optionnel
+    \ifthenelse{\equal{\NomJuryB}{Nom d'un membre du jury}}{}{%
+      \PrefJuryB~\NomJuryB\ifthenelse{\equal{\PlusTxtJuryB}{}}{,~}{,~\PlusTxtJuryB}%
+      \TxtJuryB\\%
+      % \vspace{3pt}
+      \AffilJuryB\par%
+      \vspace{1em}
+    }%
+      
+  \end{flushleft}
+  \begin{center}%
+    \vspace{3em}%
+    \renewcommand{\baselinestretch}{2}\small\normalsize%
+    \ifthenelse{\equal{\TypeDoc}{these}}{
+      THIS THESIS
+    }{
+      THIS DISSERTATION
+    } WAS PRESENTED AND DEFENDED\\
+      BEFORE A BOARD OF EXAMINERS AND PUBLIC\\
+     ON \MakeUppercase{\@datesoutenance}\\
+    AT ÉCOLE DE TECHNOLOGIE SUPÉRIEURE
+  \end{center}\par%
+  \vfil\null%
+  \end{jurypage}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Profondeur de la numérotation des divisions des chapitres
+%% Valeur de 1(\section) à 5(\subparagraph)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{secnumdepth}{5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Changement dans la table des matières 
+%% des entrées associées aux chapitres
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\def\@chapter[#1]#2{
+  \ifnum \c@secnumdepth >\m@ne%
+    \if@mainmatter%
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter}%
+      %\addcontentsline{toc}{chapter}{\protect\makebox[7em][l]{\protect\MakeUppercase{\@chapapp\ \thechapter}} \protect\MakeUppercase{#1} }%
+      \addcontentsline{toc}{chapter}{\protect\numberline{\protect\MakeUppercase{\@chapapp\ \thechapter}}\protect\MakeUppercase{#1}}%
+    \else%
+      \addcontentsline{toc}{chapter}{#1}%
+    \fi%
+  \else%
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi%
+  \chaptermark{#1}%
+%  \addtocontents{toc}{\protect\addvspace{10\p@}}%
+  \@makechapterhead{#2}%
+  \@afterheading%
+  }%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Modification des chapitres numérotés
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\@makechapterhead}[1]{{
+        \normalfont\bfseries%
+        \begin{center}
+        \etchapterheadstyle{\@chapapp{ \thechapter}} % CHAPTER 1
+        \vskip 3\p@%
+        \etchapterheadstyle{#1} % TITLE OF CHAPTER
+        \end{center}
+        \vskip 5\p@%
+        \thispagestyle{empty}%
+}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Modification des chapitres sans numéro
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\@makeschapterhead}[1]{{
+    \thispagestyle{empty}
+        \normalfont\bfseries%
+        \begin{center}
+        \etchapterheadstyle{#1} % TITLE OF CHAPTER
+        \end{center}
+}}
+
+\newcommand{\etchapterheadstyle}[1]{\MakeUppercase{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Définition des espacements avant et après les différentes
+%% divisions de chapitre
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+                                   {-0.25ex \@plus -1ex \@minus -.2ex}%
+                                   {0.5ex \@plus.2ex}%
+                                   {\normalfont\normalsize\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-0.25ex\@plus -1ex \@minus -.2ex}%
+                                     {0.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-0.25ex\@plus -1ex \@minus -.2ex}%
+                                     {0.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {-0.25ex \@plus -1ex \@minus -.2ex}%
+                                    {0.5ex \@plus .2ex}%
+                                    {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {0.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\bfseries}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Rédéfinition de l'environnement de la page de titre 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewenvironment{titlepage}{%
+  \if@twocolumn
+     \@restonecoltrue\onecolumn%
+  \else
+     \@restonecolfalse\newpage
+  \fi
+  \thispagestyle{empty}%
+  %\setcounter{page}\@ne%
+  \setcounter{page}{1}
+  }%
+{\if@restonecol\twocolumn \else \newpage \fi%
+  \if@twoside\else%
+  \setcounter{page}\@ne%
+  \fi
+  \thispagestyle{empty}%
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Définition de l'environnement de la présentation du jury
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{jurypage}{%
+  \if@twocolumn
+     \@restonecoltrue\onecolumn%
+  \else
+     \@restonecolfalse\newpage
+  \fi
+  \thispagestyle{empty}%
+  %\setcounter{page}\@ne%
+  }%
+{\if@restonecol\twocolumn \else \newpage \fi%
+  \if@twoside\else%
+  \setcounter{page}\@ne%
+  \fi
+  \thispagestyle{empty}%
+  \cleardoublepage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{abstract}[1]{%
+  \newcommand\MotCles{#1}
+  \if@twocolumn
+     \@restonecoltrue\onecolumn%
+  \else
+     \@restonecolfalse\newpage
+  \fi
+  \cleardoublepage
+  \thispagestyle{empty}% Pas de numérotation sur cette page
+  %\setcounter{page}{1} % Première page numérotée du document
+  %\addcontentsline{toc}{chapter}{RÉSUMÉ} % Ajout dans la table des matières
+  \renewcommand{\baselinestretch}{1}\small\normalsize % Interligne simple
+  \begin{center}
+    \normalfont%
+    \MakeUppercase{\bfseries\@title}%
+    \vskip 6\p@%
+    \@author%
+    \vskip 6\p@%
+    \MakeUppercase{\textbf{ABSTRACT}}%
+  \end{center}
+  
+}
+{
+  ~\\ %Ajout de 3 retours à la ligne avant les Mot clés
+  ~\\
+  ~\\
+  {\bf Mot-clés:} \MotCles
+
+  \if@restonecol\twocolumn \else \newpage \fi%
+  \cleardoublepage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sommaire
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{sommaire}[2]{%
+  \newcommand\KeyWords{#2}
+  \if@twocolumn
+     \@restonecoltrue\onecolumn%
+  \else
+     \@restonecolfalse\newpage
+  \fi
+  \cleardoublepage
+  \thispagestyle{empty}% Pas de numérotation sur cette page
+  %\addcontentsline{toc}{chapter}{ABSTRACT}
+  \renewcommand{\baselinestretch}{1}\small\normalsize % Interligne simple
+  \begin{center}
+    \normalfont%
+    \MakeUppercase{\bfseries#1}%
+    \vskip 6\p@%
+    \@author%
+    \vskip 6\p@%
+    \MakeUppercase{\textbf{RÉSUMÉ}}%
+  \end{center}
+}
+{
+  ~\\ %Ajout de 3 retours à la ligne avant les Mot clés
+  ~\\
+  ~\\
+  ~\\
+  {\bf Keywords:} \KeyWords
+
+  \if@restonecol\twocolumn \else \newpage \fi%
+  \cleardoublepage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Avant-propos
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{avantpropos}{%
+  \chapter*{Avant-propos}
+%  \addcontentsline{toc}{chapter}{AVANT-PROPOS} % Ajout dans la table des matières
+%  \chapter*{Avant-propos et remerciements}
+ % \addcontentsline{toc}{chapter}{AVANT-PROPOS ET REMERCIEMENTS} % Ajout dans la table des matières
+    % Interligne double
+%    \renewcommand{\baselinestretch}{2}\small\normalsize%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{introduction}{%
+  \cleardoublepage
+  \chapter*{Introduction}
+  \addcontentsline{toc}{chapter}{INTRODUCTION} % Ajout dans la table des matières
+  \setcounter{page}{1}
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{conclusion}{%
+  \chapter*{Conclusion}
+  \addcontentsline{toc}{chapter}{CONCLUSION} % Ajout dans la table des matières
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Remerciement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{acknowledgements}{%
+  \chapter*{Acknowledgements}
+ % \addcontentsline{toc}{chapter}{REMERCIEMENTS} % Ajout dans la table des matières
+    % Interligne double
+%    \renewcommand{\baselinestretch}{2}\small\normalsize%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Commande pour écrire ``Page'' 
+%% dans les différentes tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tdmpage}[0]{\hspace{\fill}\mbox{Page}\vskip 1.0em\par}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table des matières
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\tableofcontents{%
+  \chapter*{\contentsname}
+  %\addcontentsline{toc}{chapter}{\MakeUppercase{\contentsname}} % Ajout dans la table des matières
+  \tdmpage
+  {
+    % Espace avant les différentes lignes de la table des matières
+    \setlength{\parskip}{0pt}%
+    % Interligne simple pour la table des matières
+    \renewcommand{\baselinestretch}{1}\small\normalsize%
+    \@starttoc{toc}
+    }
+}
+
+%%% Modification de l'espace entre les points de la table des matières
+\renewcommand{\@dotsep}{1} % (\@dotsep est une valeur)
+
+
+% Les parties n'étant pas utilisées on s'en sert pour pouvoir ajouter annexe correctement dans la table des matieres
+\renewcommand*\l@part[2]{%
+  \settowidth{\largChap}{\MakeUppercase{\@chapapp\ \thechapter\hskip 1em}}
+  \ifnum \c@tocdepth >\m@ne%
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@%
+    \setlength\@tempdima{\largChap}%
+    \begingroup
+      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth%
+      \parfillskip -\tocRightMargin%\@pnumwidth%
+      \leavevmode %
+      \advance\leftskip \tocLeftMarginSecondLineChapter%\@tempdima%
+      \hskip -\leftskip%
+      #1\nobreak\leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{}\mkern \@dotsep mu$}\hfil \nobreak\hb@xt@\@pnumwidth{\hss }\par%
+      \penalty\@highpenalty%
+    \endgroup
+  \fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Modif pour ne pas avoir le chapitre en gras 
+%% dans la table des matières
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*\l@chapter[2]{%
+  \settowidth{\largChap}{\MakeUppercase{\@chapapp\ \thechapter\hskip 1em}}
+  \settowidth{\largNum}{\hss #2}
+  \ifnum \c@tocdepth >\m@ne%
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@%
+    \setlength\@tempdima{\largChap}%
+    \begingroup
+      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth%
+      \parfillskip -\tocRightMargin%\@pnumwidth%
+      \leavevmode %
+      \advance\leftskip \tocLeftMarginSecondLine%\@tempdima%
+      \hskip -\leftskip%
+      #1\nobreak\leaders\hbox{$\m@th \hbox{.}\mkern \@dotsep mu$}\hfil \nobreak\hb@xt@%
+      \largNum{\hss #2}\par%
+      \penalty\@highpenalty%
+    \endgroup
+  \fi}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table des matières
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\tableofcontents{%
+%  \chapter*{\contentsname}
+  \chapter*{Table of Contents}
+  \tdmpage
+    {
+      % Espace avant les différentes lignes de la table des matières
+      \setlength{\parskip}{0pt}%
+      % Interligne simple pour la table des matières
+      \renewcommand{\baselinestretch}{1}\small\normalsize%
+      \@starttoc{toc}
+    }
+}
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne%
+    \addpenalty{-\@highpenalty}%
+    \vskip 1em \@plus\p@%
+%    \setlength\@tempdima{1.5em}%
+    \setlength\@tempdima{7.0em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth%
+      \parfillskip -\@pnumwidth%
+      \leavevmode %
+      \advance\leftskip\@tempdima%
+      \hskip -\leftskip%
+      #1\nobreak
+      \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}
+      \hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par%
+      \penalty\@highpenalty%
+    \endgroup
+  \fi
+%    \vskip -1em
+  }
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{3.5em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{3.5em}{3.5em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{7em}{3.5em}}
+\renewcommand*\l@paragraph{\@dottedtocline{4}{2.5em}{3.5em}}
+\renewcommand*\l@subparagraph{\@dottedtocline{5}{2.5em}{3.5em}}
+%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Pour aligner toutes les entrées 
+%%% de la table des matières
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%% IMPLEMENTE PAR SEB, MIS ENTRE COMMENTAIRES PAR LUIS (CAR LE NOUVEAU FORMAT EXIGE 
+%%%%%%% QUE LES "SECTION" SOIENT INDENTES PAR RAPPORT AUX "CHAPTER", LES "SUBSECTION" PAR RAPPORT AU "SECTION", ETC. 
+%%%%%%% *****************   DEBUT COMMENTAIRES ***************************** 
+%% STEPHANE - les section sont aligné sur les chapitres
+%\renewcommand*\l@section[2]{%
+%  \settowidth{\largNum}{\hss #2}
+%  \ifnum \c@tocdepth >\z@
+%    \addpenalty{-\@highpenalty}%
+%%    \hskip 2.5 em
+%    \setlength\@tempdima{3.5em}%
+%    \begingroup
+%      \pretolerance=10000
+%      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth
+%      \parfillskip -\tocRightMargin%\@pnumwidth
+%      \leavevmode %
+%      \advance\leftskip \tocLeftMarginSecondLine%\@tempdima
+%      \hskip -\leftskip
+%      #1\nobreak\leaders\hbox{$\m@th \hbox{.}\mkern \@dotsep mu$}\hfil \nobreak\hb@xt@%\@pnumwidth%
+%      \largNum{\hss #2}\par%
+%    \endgroup
+%  \fi}
+
+%\renewcommand*\l@subsection[2]{%
+%  \settowidth{\largNum}{\hss #2}
+%  \ifnum \c@tocdepth >\z@
+%    \addpenalty{-\@highpenalty}%
+%    \hskip 2.5 em
+%    \setlength\@tempdima{3.5em}%
+%   \begingroup
+%      \pretolerance=10000
+%      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth
+%     \parfillskip -\tocRightMargin%\@pnumwidth
+%      \leavevmode %
+%      \advance\leftskip \tocLeftMarginSecondLine%\@tempdima
+%      \hskip -\leftskip
+%      #1\nobreak\leaders\hbox{$\m@th \hbox{.}\mkern \@dotsep mu$}\hfil \nobreak\hb@xt@%\@pnumwidth%
+%      \largNum{\hss #2}\par%
+%    \endgroup
+%  \fi}
+
+%\renewcommand*\l@subsubsection[2]{%
+%  \settowidth{\largNum}{\hss #2}
+%  \ifnum \c@tocdepth >\z@
+%    \addpenalty{-\@highpenalty}%
+%    \hskip 2.5 em
+%    \setlength\@tempdima{3.5em}%
+%    \begingroup
+%      \pretolerance=10000
+%      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth
+%      \parfillskip -\tocRightMargin%\@pnumwidth
+%      \leavevmode %
+%      \advance\leftskip \tocLeftMarginSecondLine%\@tempdima
+%      \hskip -\leftskip
+%      #1\nobreak\leaders\hbox{$\m@th \hbox{.}\mkern \@dotsep mu$}\hfil \nobreak\hb@xt@%\@pnumwidth%
+%      \largNum{\hss #2}\par%
+%    \endgroup
+%  \fi}
+%%%%%%% *****************   FIN COMMENTAIRES ***************************** 
+%%%%%%% *****************         LUIS       ***************************** 
+
+%\renewcommand*\l@paragraph[2]{%
+%  \settowidth{\largNum}{\hss #2}
+%  \ifnum \c@tocdepth >\z@
+%    \addpenalty{-\@highpenalty}%
+%    \hskip 2.5 em
+%    \setlength\@tempdima{3.5em}%
+%    \begingroup
+%      \pretolerance=10000
+%      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth
+%      \parfillskip -\tocRightMargin%\@pnumwidth
+%      \leavevmode %
+%      \advance\leftskip \tocLeftMarginSecondLine%\@tempdima
+%      \hskip -\leftskip
+%      #1\nobreak\leaders\hbox{$\m@th \hbox{.}\mkern \@dotsep mu$}\hfil \nobreak\hb@xt@%\@pnumwidth%
+%      \largNum{\hss #2}\par%
+%    \endgroup
+%  \fi}
+%
+%\renewcommand*\l@subparagraph[2]{%
+%  \settowidth{\largNum}{\hss #2}
+%  \ifnum \c@tocdepth >\z@
+%    \addpenalty{-\@highpenalty}%
+%    \hskip 2.5 em
+%    \setlength\@tempdima{3.5em}%
+%    \begingroup
+%      \pretolerance=10000
+%      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth
+%      \parfillskip -\tocRightMargin%\@pnumwidth
+%      \leavevmode %
+%      \advance\leftskip \tocLeftMarginSecondLine%\@tempdima
+%      \hskip -\leftskip
+%      #1\nobreak\leaders\hbox{$\m@th \hbox{.}\mkern \@dotsep mu$}\hfil \nobreak\hb@xt@%\@pnumwidth%
+%      \largNum{\hss #2}\par%
+%    \endgroup
+%  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Profondeur des entrées dans la table 
+%% des matières: 3=\subsubsection
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Pour rendre indépendante la numérotation des figures et tables
+%% de la numérotation du chapitre
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\def\@removefromreset#1#2{{%
+%  \expandafter\let\csname c@#1\endcsname\@removefromreset
+%  \def\@elt##1{%
+%    \expandafter\ifx\csname c@##1\endcsname\@removefromreset
+%    \else
+%      \noexpand\@elt{##1}%
+%    \fi}%
+%  \expandafter\xdef\csname cl@#2\endcsname{%
+%    \csname cl@#2\endcsname}}}
+
+%\makeatletter
+%\@removefromreset{figure}{chapter}
+%\@removefromreset{table}{chapter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Liste des figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\listoffigures{%
+    \chapter*{\listfigurename}
+    %\addcontentsline{toc}{chapter}{\MakeUppercase{\listfigurename}} % Ajout dans la table des matières
+    \tdmpage
+    {
+      \setlength{\parskip}{0pt}%
+      \renewcommand{\baselinestretch}{1}\small\normalsize%
+      \@starttoc{lof}%
+    }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Numérotation des figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand \thefigure
+%     {\@arabic\c@figure}
+\renewcommand*\l@figure[2]{%
+  \settowidth{\largNum}{\hss #2}
+  \ifnum \c@tocdepth >\m@ne%
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@%
+    \setlength\@tempdima{3.4em}%
+        \noindent%
+    \begingroup
+      \pretolerance=10000
+      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth%
+      \parfillskip -\tocRightMargin%\@pnumwidth%
+     \leavevmode \normalsize%
+     \advance\leftskip \tocLeftMarginSecondLineFigure%
+      \hskip -\leftskip%
+      {\figurename\mbox{\hspace{4pt}}#1}\nobreak%
+       \leaders\hbox{$\m@th%
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep%
+        mu$} \hfil\nobreak\hb@xt@%
+                    \largNum{\hss #2}\par%
+      \penalty\@highpenalty%
+    \endgroup
+  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Liste des tableaux
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\listoftables{%
+  \chapter*{\listtablename}
+  %\addcontentsline{toc}{chapter}{\MakeUppercase{\listtablename}} % Ajout dans la table des matières
+  \tdmpage
+  {
+    \setlength{\parskip}{0pt}%
+    \renewcommand{\baselinestretch}{1}\small\normalsize%
+    \@starttoc{lot}%
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Numérotation des tableaux
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\thetable}
+%             {\@arabic\c@table}
+%\renewcommand{\thetable}{\Roman{table}}
+
+\renewcommand*\l@table[2]{%
+  \settowidth{\largNum}{\hss #2}
+  \ifnum \c@tocdepth >\m@ne%
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@%
+    \setlength\@tempdima{3.4em}%ici pour changer l'espace entre le numero et le titre du tableau !! (défaut 2.2em)
+        \noindent%
+    \begingroup
+      \pretolerance=10000
+      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth %
+      \parfillskip -\tocRightMargin%\@pnumwidth%
+      \leavevmode \normalsize%
+     \advance\leftskip \tocLeftMarginSecondLineTable %5.2em%8.4em%
+      \hskip -\leftskip%
+      {\tablename\mbox{\hspace{4pt}}#1}\nobreak%
+       \leaders\hbox{$\m@th%
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep%
+        mu$} \hfil\nobreak\hb@xt@%\@pnumwidth
+                    \largNum{\hss #2}\par%
+      \penalty\@highpenalty%
+    \endgroup
+  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Liste des extraits de code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\lstlistoflistings{%
+    \chapter*{\lstlistlistingname}%
+    \tdmpage
+    {
+      \setlength{\parskip}{0pt}%
+      \renewcommand{\baselinestretch}{1}\small\normalsize%
+      \@starttoc{lol}%
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Numérotation des extraits de code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*\l@lstlisting[2]{%
+  \settowidth{\largNum}{\hss #2}
+  \ifnum \c@tocdepth >\m@ne%
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@%
+    \setlength\@tempdima{3.4em}%
+        \noindent%
+    \begingroup
+      \pretolerance=10000
+      \parindent \z@ \rightskip \tocRightMargin%\@pnumwidth%
+      \parfillskip -\tocRightMargin%\@pnumwidth%
+     \leavevmode \normalsize%
+     \advance\leftskip \tocLeftMarginSecondLineFigure%
+      \hskip -\leftskip%
+      {\lstlistingname\mbox{\hspace{4pt}}#1}\nobreak%
+       \leaders\hbox{$\m@th%
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep%
+        mu$} \hfil\nobreak\hb@xt@%
+                    \largNum{\hss #2}\par%
+      \penalty\@highpenalty%
+    \endgroup
+  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Liste des symboles basé sur l'environnement ``description''
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\descril}
+\setlength{\descril}{2cm}
+\newenvironment{listofsymbols}[1][\descril]{%
+   \cleardoublepage
+  \chapter*{List of Symbols}
+  %\addcontentsline{toc}{chapter}{\MakeUppercase{Liste des abréviations et sigles}} % Ajout dans la table des matières
+  \begin{list}{\mbox{}}{%
+      \let\makelabel\losymblabel%
+      \leftmargin #1%
+      \labelwidth \leftmargin%
+      \labelsep    1mm}}%
+  {\end{list}}
+\newcommand*\losymblabel[1]{\hspace\labelsep
+  \normalfont\mbox{ #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Liste des symboles basé sur l'environnement ``description''
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{listofabbr}[1][\descril]{%
+  \cleardoublepage
+  \chapter*{List of Abbreviations}
+  %\addcontentsline{toc}{chapter}{\MakeUppercase{Liste des abréviations et sigles}} % Ajout dans la table des matières
+  \begin{list}{\mbox{}}{%
+      \let\makelabel\losymblabel%
+      \leftmargin #1%
+      \labelwidth \leftmargin%
+      \labelsep    1mm}}%
+  {\end{list}}
+\renewcommand*\losymblabel[1]{\hspace\labelsep
+  \normalfont\mbox{ #1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Mise en forme des légendes pour les figures et tableaux
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\largetiqfig}
+\setlength{\largetiqfig}{2.2cm}
+\newlength{\larglegendfig}
+\setlength{\larglegendfig}{\textwidth-\largetiqfig}
+
+%%%%%
+% Petit bout qui fucke les algorithmes...
+%%%%
+%\long\def\@caption#1[#2]#3{\par\addcontentsline{\csname ext@#1\endcsname}{#1}{%
+%   \protect\numberline{\csname the#1\endcsname}{\ignorespaces #2}}%
+%   \begingroup\@parboxrestore\normalsize%
+%     \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}{#1}\par%
+%     \endgroup}
+%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Remplacé par ce petit bout (merci à Fred)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\long\def\@caption#1[#2]#3{\par\addcontentsline{\csname ext@#1\endcsname}{#1}
+{%
+    \protect\numberline{\csname the#1\endcsname}{\ignorespaces #2}}%
+  \begingroup\@parboxrestore\normalsize%
+  \pretolerance=10000
+  \ifx\figurestring#1
+     \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}{#1}\par%
+  \else
+     \ifx\tablestring#1
+        \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}{#1}\par%
+        \footnotesize \centering
+     \else
+        \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par%
+        \footnotesize \centering
+     \fi
+  \fi
+  \pretolerance=100
+  \endgroup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength{\tempabovecaptionskip}   %% Pour enlever l'éspace après le caption du tableau
+
+
+%%%%
+% On utilise le package caption pour définir le format des légendes
+%
+%\captionsetup[figure]{labelfont={bf,singlespacing},justification=centering}
+\captionsetup[figure]{labelfont={singlespacing},justification=centering}
+\captionsetup[table]{labelfont=normalfont,labelsep=quad,justification=centering,skip=1cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Etant donne que la commande \captionsetup{list=no} n a pas marche pour enlever les legendes
+% des figures et des tableaux des listes de figures et tableau, je triche en declarant un nouveau
+% float pour les annexes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareCaptionType{figureap}[Figure-A]
+\captionsetup[figureap]{labelfont=normalfont,justification=centering}
+\renewenvironment{figureap}[1][]{%
+  \@float{figureap}%
+  \centering
+}{%
+  \end@float
+}
+\renewcommand{\thefigureap}{{\Roman{chapter}-\arabic{figureap}}}
+
+
+\DeclareCaptionType{tableap}[Tableau-A]
+\captionsetup[tableap]{labelfont=normalfont,labelsep=quad,justification=centering,skip=1cm}
+\renewenvironment{tableap}[1][]{%
+  \@float{tableap}%
+%  \footnotesize
+  \centering
+}{%
+  \end@float
+}
+\renewcommand{\thetableap}{{\Roman{chapter}-\arabic{tableap}}}
+
+%\def\tablestring{table}%
+%\def\figurestring{figure}%
+%\def\listingstring{listing}%
+%%\def\algorithmstring{algorithme}%
+%\long\def\@makecaption#1#2#3{%
+%\ifx\figurestring#3%
+%  \vskip\abovecaptionskip%
+%  \linespread{1}
+%  \sbox\@tempboxa{\normalsize\parbox[t]{\largetiqfig}{\bfseries#1}\bfseries#2}%
+%  \ifdim \wd\@tempboxa <\hsize
+%    \global \@minipagefalse
+%    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+%  \else
+%    \sbox\@tempboxa{\normalsize\parbox[t]{\larglegendfig}{\centering \parbox[t]{\largetiqfig}{\bfseries#1}\bfseries#2}}%
+%    \global \@minipagefalse
+%    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+%  \fi
+%  \vskip\belowcaptionskip%
+%\else
+%  \ifx\tablestring#3
+%    %% Pour enlever l'éspace après le caption du tableau ...plus besoin
+%%    \setlength{\tempabovecaptionskip}{\abovecaptionskip}
+%%    \setlength{\abovecaptionskip}{-0.4cm}
+%    
+%    \vskip \belowcaptionskip%
+%    \begin{center}
+%      \renewcommand{\baselinestretch}{1}\small\normalsize%
+%      {\normalsize #1 \ \ #2}\par%
+%%      {\normalsize #1}\par%
+%%      \vskip 12\p@%
+%%      {\normalsize #2}\par%
+%    \end{center}
+%    \vskip
+%    \abovecaptionskip%
+%
+%%    \setlength{\abovecaptionskip}{\tempabovecaptionskip} %%réprends l'ancienne valeur
+%  %% Pascal Giard - Ajout support pour les captions autres que table et figure
+%  \else
+%    \vskip\abovecaptionskip
+%    \linespread{1}
+%    \sbox\@tempboxa{\normalsize\parbox[t]{\largetiqfig}{\bfseries#1}\bfseries#2}%
+%    \ifdim \wd\@tempboxa <\hsize
+%      \global \@minipagefalse
+%      \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+%    \else
+%      \sbox\@tempboxa{\normalsize\parbox[t]{\larglegendfig}{\centering \parbox[t]{\largetiqfig}{\bfseries#1}\bfseries#2}}%
+%      \global \@minipagefalse
+%      \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+%    \fi
+%    \vskip\belowcaptionskip
+%  \fi
+%\fi
+%}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Numérotation des annexes en chiffres arabes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\appendix}{
+  \par
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \gdef\@chapapp{\appendixname}%
+  \gdef\thechapter{\@Roman\c@chapter}
+
+  %
+  % Empeche les sections et sous sections d'etre dans la table des matières
+  % 
+
+  \newcommand{\numero}{\thesection}
+  \newcommand{\changenumero}[1]{\renewcommand{\numero}{##1}}
+
+  \renewcommand \thesection{\@arabic\c@section} % Enleve le numero du chapitre courant
+
+  \def\sectionannexe{\@ifstar\unnumberedsection\numberedsection}
+
+  \def\numberedsection{\@ifnextchar[%]
+    \numberedsectionwithtwoarguments\numberedsectionwithoneargument}
+  \def\unnumberedsection{\@ifnextchar[%]
+    \unnumberedsectionwithtwoarguments\unnumberedsectionwithoneargument}
+  \def\numberedsectionwithoneargument##1{\numberedsectionwithtwoarguments[##1]{##1}}
+  \def\unnumberedsectionwithoneargument##1{\unnumberedsectionwithtwoarguments[##1]{##1}}
+  \def\numberedsectionwithtwoarguments[##1]##2{%
+    \ifhmode\par\fi
+    \removelastskip
+    \vskip .7ex \goodbreak
+    \noindent
+    \begingroup
+      \leavevmode\Large\bfseries\raggedright
+      \normalsize\bfseries
+      \numero\quad
+      ##2
+      \par
+    \endgroup
+    \vskip .7ex \nobreak
+  }
+  \def\unnumberedsectionwithtwoarguments[##1]##2{%
+    \ifhmode\par\fi
+    \removelastskip
+    \vskip .7ex\goodbreak
+    \noindent
+    \begingroup
+      \leavevmode\normalfont\Large\bfseries\raggedright
+      \leavevmode\normalfont\Large\bfseries\raggedright
+      \normalsize\bfseries
+      ##2
+      \par
+    \endgroup
+    \vskip .7ex\nobreak
+  }
+  \def\section{\refstepcounter{section}\changenumero{\thesection} \sectionannexe}
+  \def\subsection{\refstepcounter{subsection}\changenumero{\thesubsection} \sectionannexe}
+  \def\subsubsection{\refstepcounter{subsubsection}\changenumero{\thesubsubsection} \sectionannexe}
+  \def\paragraph{\refstepcounter{paragraph}\changenumero{\theparagraph} \sectionannexe}
+  \def\subparagraph{\refstepcounter{subparagraph}\changenumero{\thesubparagraph} \sectionannexe}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% Pour une bonne mise en page des annexes
+  %% ANNEXE doit apparaitre dans la table des matieres lors de sa premiere apparition
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newcommand{\nameannexe}{\appendixname}
+  \newcommand{\multiannexe}{
+    \renewcommand{\nameannexe}{ANNEXES}
+    
+    \widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+
+  }
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% Changement dans la table des matières 
+  %% des entrées associées aux annexes
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% 
+  %% COMME DÉFINI PAR SEB 
+  %% Utilisez ceci si vous voulez que 
+  %% la Table des Matieres soit comme ca: 
+  %% RECOMMANDATION(S)
+  %% ANNEXES
+  %%    1: Titre Annexe 1 
+  %%    2: Titre Annexe 1 
+  %\def\@chapter[##1]##2{
+  %  \ifnum \c@secnumdepth >\m@ne%
+  %    \if@mainmatter%
+  %      \refstepcounter{chapter}%
+  %      \ifthenelse{\equal{\value{chapter}}{1}}{
+  %        \addcontentsline{toc}{part}{\MakeUppercase{\nameannexe}}
+  %        \addtocontents{toc}{\protect\addvspace{10\p@}}
+  %      }{}
+  %      \typeout{\@chapapp\space\thechapter} 
+  %      \addcontentsline{toc}{section}{\thechapter : ##1}
+  %    \else%
+  %      \addcontentsline{toc}{section}{##1}%
+  %    \fi%
+  %  \else%
+  %    \addcontentsline{toc}{section}{##1}%
+  %  \fi%
+  %  \chaptermark{##1}%
+  %  \@makechapterhead{##2}%
+  %  \@afterheading%
+  %}%
+  %% MODIFIÉ PAR LUIS 
+  %% Utilisez ceci si vous voulez que 
+  %% la Table des Matieres soit comme ca: 
+  %% RECOMMANDATION(S)
+  %% ANNEXE 1           Titre Annexe 1 
+  %% ANNEXE 2           Titre Annexe 2  
+%  \def\@chapter[##1]##2{
+%    \ifnum \c@secnumdepth >\m@ne%
+%      \if@mainmatter%
+%        \refstepcounter{chapter}%
+%        \ifthenelse{\equal{\value{chapter}}{1}}{
+%          %\addcontentsline{toc}{part}{\MakeUppercase{\nameannexe}}
+%          \addtocontents{toc}{\protect\addvspace{10\p@}}
+%        }{}
+%        \typeout{\@chapapp\space\thechapter}  
+%        %\addcontentsline{toc}{section}{\MakeUppercase{\appendixname}~\thechapter : ##1}
+%        \addcontentsline{toc}{chapter}{\MakeUppercase{\appendixname}~\thechapter ~  ##1}
+%      \else%
+%        \addcontentsline{toc}{section}{##1}%
+%      \fi%
+%    \else%
+%      \addcontentsline{toc}{section}{##1}%
+%    \fi%
+%    \chaptermark{##1}%
+%    \@makechapterhead{##2}%
+%    \@afterheading%
+%  }%
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  %% Modification des annexes numérotées
+%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \renewcommand{\@makechapterhead}[1]{{
+%        \normalfont\bfseries%
+%        \begin{center}
+%          \MakeUppercase{\appendixname~\thechapter} % ANNEXE 1
+%          \vskip 3\p@%
+%          ##1 % Title of annexe
+%        \end{center}
+%        \thispagestyle{empty}%
+%        \newpage
+%        \normalfont\bfseries%
+%        \begin{center}
+%          \MakeUppercase{##1} % TITLE OF ANNEXE
+%        \end{center}
+%        \vskip 5\p@%
+%        \thispagestyle{empty}
+%  }}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% Modification des annexes numérotées        % NOUVELLE DEMANDE : PAS REPETER LE TITRE SUR LA PAGE SUIVANTE
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \renewcommand{\@makechapterhead}[1]{{
+        \normalfont\bfseries%
+        \begin{center}
+          \MakeUppercase{\appendixname~\thechapter} % ANNEXE 1
+          \vskip 3\p@%
+          \MakeUppercase{##1} % Title of annexe
+        \end{center}
+        \thispagestyle{empty}%
+%        \newpage
+    %    \normalfont\bfseries%                          % NOUVELLE DEMANDE : PAS REPETER LE TITRE SUR LA PAGE SUIVANTE
+%        \begin{center}
+%          \MakeUppercase{##1} % TITLE OF ANNEXE
+%        \end{center}
+%        \vskip 5\p@%
+%        \thispagestyle{empty}
+  }}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% Modification des annexes sans numéro (ne devrait pas être utilisé)
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \renewcommand{\@makeschapterhead}[1]{{
+    \thispagestyle{empty}
+        \normalfont\bfseries%
+        \begin{center}
+           \MakeUppercase{##1} % TITLE OF ANNEXE
+        \end{center}
+        \vskip 5\p@%
+        \thispagestyle{empty}
+  }}
+
+}
+
+%
+% Intitulés francais des figures, tableaux, etc.
+%
+
+\pagestyle{myheadings}
+
+%
+% Pour avoir des citations à interligne simple
+%
+\renewenvironment{quote}{
+  \linespread{1}\small\normalsize\list{}{\rightmargin\leftmargin}%
+  \item\relax
+}{\endlist \linespread{2} \small \normalsize\noindent\hspace{-0.333em}\vskip 12\p@}
+
+%
+% Bonne présentation des figures et tables
+%
+
+\renewenvironment{figure}[1][]{%
+  ~\\ % Saut de ligne avant figure
+  \@float{figure}%
+  \centering
+}{%
+  \end@float
+}
+
+\renewenvironment{table}[1][]{%
+  ~\\ % Saut de ligne avant figure
+  \@float{table}%
+%  \footnotesize
+  \centering
+}{%
+  \end@float
+}
+
+%
+% Positionnement des flottants
+%   on privilégie htbp (here, top, bottom, next page)
+%
+\def\fps@figure{htbp}
+\def\fps@table{htbp}
+
+%
+% Énumération avec des lettres, aligné à gauche
+% Modifi'e par LUIS (defs. de \par*) 
+%
+\renewcommand\enumerate{%
+  \ifnum \@enumdepth >\thr@@\@toodeep\else
+    \advance\@enumdepth\@ne
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+      \expandafter
+      \list
+        \csname label\@enumctr\endcsname
+        {\usecounter
+            {\@enumctr}% 
+            \itemsep 0pt%
+            \parsep \parskip% 
+            %\setlength{\parskip}{0ex}%
+            \setlength{\partopsep}{0ex}%
+           \def\makelabel##1{\hspace{-6pt}\hspace\labelsep ##1}%
+        }%
+  \fi} 
+\renewcommand{\labelenumi}{\alph{enumi}.}
+
+
+% Pas de décallage dans l'itemize non plus, désactivation du custom itemize de babel french
+
+%\frenchbsetup{StandardLists=true}
+
+\let\tempitemize=\itemize
+\renewcommand\itemize{%
+ \setlength{\partopsep}{0pt}%
+ \tempitemize
+ \setlength{\itemsep}{0pt}%
+ \def\makelabel##1{\hspace{-6pt}\hspace\labelsep ##1} }
+
+
+%
+% Bibliographie
+% Pas utilisé -Stéphane Mercier
+
+\renewcommand{\bibname}{BIBLIOGRAPHY}
+
+
+\theoremstyle{plain}
+\newtheorem{definition}{Definition}[chapter]
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rédéfinition de \cleardoublepage pour l'impression recto-verso
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+    \hbox{}
+    \thispagestyle{empty}
+    \newpage
+    \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother \clearpage{\pagestyle{empty}\cleardoublepage}

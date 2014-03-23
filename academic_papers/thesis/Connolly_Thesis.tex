@@ -1,0 +1,145 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   IMPORTANT
+%%
+%%  Si vous créez un fichier PDF directement avec PDFLatex, et vous utilisez
+%%  Acrobat Reader pour faire l'impression, n'oubliez-pas de changer l'option
+%%  <<Mise à l'échelle>> pour la valeur <<Aucune>> pour que les marges soient
+%%  imprimés correctement.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[letterpaper, twoside, 12pt,
+               thesepararticles, creativecommons]{thETS}
+
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[pdftex]{graphicx}
+\usepackage{caption}
+\usepackage{subfig}
+
+\usepackage[chapter]{algorithm}
+\floatstyle{plaintop}
+\restylefloat{algorithm}
+
+\usepackage[noend]{algpseudocode}
+\usepackage{array, multirow}
+\usepackage[round]{natbibETS}
+\usepackage{multibib}
+\newcites{refs}{REFERENCES}
+\usepackage{url}
+\urlstyle{rm}
+
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\graphicspath{ {Figures/} }
+
+\renewcommand{\algorithmicrequire}{\textbf{Inputs:}}		%-- Algo
+\renewcommand{\algorithmicensure}{\textbf{Outputs:}}		%-- itou
+
+\hyphenation{pro-blem}
+
+
+\listfiles
+
+%------------------------------------------------------------------------------%
+\title{Adapting heterogeneous ensembles with particle swarm optimization for video face recognition}
+
+\author{Jean-Fran\c{c}ois CONNOLLY}
+\authorcopyright{Jean-Fran\c{c}ois Connolly}
+\datesoutenance{July 17, 2012}
+\datedepot{August 31, 2012}
+
+\directeur{Mr.}{\'{E}ric Granger}{D\'{e}partement de g\'{e}nie de la production automatis\'{e}e \`{a} l'\'{E}cole de technologie sup\'{e}rieure}
+
+\codirecteur{Mr.}{Robert Sabourin}{D\'{e}partement de g\'{e}nie de la production automatis\'{e}e \`{a} l'\'{E}cole de technologie sup\'{e}rieure}
+
+\president{Mr.}{Pierre Dumouchel}{D\'{e}partement du g\'{e}nie logiciel et des TI \`{a} l'\'{E}cole de technologie sup\'{e}rieure}
+
+\examinexterne{Mr.}{Umapada Pal}{Computer Vision And Pattern Recognition Unit at the Kolkata Indian Statistical Institute}{}
+
+\jury{Mr.}{Luc Duong}{D\'{e}partement de g\'{e}nie Logiciel et des TI \`{a} l'\'{E}cole de technologie sup\'{e}rieure}{}
+%------------------------------------------------------------------------------%
+
+\begin{document}
+
+\pagenumbering{Roman}
+\maketitle
+\presentjury
+
+\begin{acknowledgements}
+	\input{chapter0_0_acknowledgements.tex}
+\end{acknowledgements}
+\clearpage
+
+%---------------------------------- Abstract ----------------------------------%
+\begin{abstract}{Incremental Learning, Multi-Classifier Systems, Adaptive Heterogeneous Ensembles, Dynamic Multi-Objective Optimization, Diversity, ARTMAP Neural Networks, Particle Swarm Optimization, Face Recognition in Video, Adaptive Biometrics} \input{chapter0_1_abstract.tex}
+\end{abstract}
+
+%---------------------------------- Sommaire ----------------------------------%
+\begin{sommaire}{Évolution d'un système multiclassificateur adaptatif pour reconnaissance de visages à partir de séquences vidéo}{Apprentissage incrémental, systèmes multiclassificateurs, ensembles hétérogènes adaptatifs, optimisation dynamique multi-objective, diversité, réseaux de neurones ARTMAP, optimisation par essaims de particles, reconnaissance de visages à partir de séquences vidéo, systèmes biométriques adaptifs.}
+
+\input{chapter0_2_sommaire.tex}
+
+\end{sommaire}
+
+%--------------------------- Tables & lists of ... ----------------------------%
+\tableofcontents    %- ... contents
+\listoftables       %- ... tables
+\listoffigures      %- ... figures
+
+%-- ... abbreviations 
+\begin{listofabbr}[3cm]
+	\input{chapter0_3_abbreviations.tex}
+\end{listofabbr}
+
+%-- ... symbols
+\begin{listofsymbols}[3cm]
+	\input{chapter0_4_symbols.tex}
+\end{listofsymbols}
+
+\clearpage
+
+%------------------------------------------------------------------------------%
+%------------------------------ The Thesis itself -----------------------------%
+\pagenumbering{arabic}
+
+ \reversemarginpar %- pour que les marginpar s'amenent a GAUCHE du doc.
+
+%-------------------------------- Introduction --------------------------------%
+\onehalfspacing
+\newpage
+\begin{introduction}
+	\input{chapter_0_introduction.tex}
+\end{introduction}
+
+%---------------------------------- Chapters ----------------------------------%
+\input{chapter_1_ins8598.tex}
+\input{chapter_2_pr-d-00103.tex}
+\input{chapter_3_asoc.tex}
+
+%--------------------------------- Conclusion ---------------------------------%
+\begin{conclusion}
+	\input{chapter_4_conclusion.tex}
+\end{conclusion}
+
+%------------------------------------------------------------------------------%
+%--------------------------------- Appendixes ---------------------------------%
+\appendix \multiannexe %- For multiple appendixes
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\setcounter{algorithm}{0}
+\input{chapter_a0-learn++.tex}
+\input{chapter_a1-ins8598.tex}
+
+%------------------------------------------------------------------------------%
+%-------------------------------- Bibliography -------------------------------%
+%-- Bibliography
+\newpage
+\singlespacing
+\bibliographystyle{bibETS}
+\addcontentsline{toc}{chapter}{BIBLIOGRAPHY}
+\bibliography{references} 
+\doublespacing
+
+%------------------------------ The end! ouf ... ------------------------------%
+\end{document}
